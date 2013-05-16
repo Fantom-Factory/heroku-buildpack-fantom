@@ -36,11 +36,11 @@ export FAN_HOME=$CACHE_DIR/fantom-$FAN_VERSION
 
 FAN_URL="http://fan.googlecode.com/files/fantom-$FANTOM_VERSION.zip"
 
-echo -n "-----> Installing Fantom $FAN_VERSION....."
+echo -n "-----> Installing Fantom $FAN_VERSION..... "
 curl --silent --location $FAN_URL > fan.zip
-opt/unzip fan.zip
+./opt/unzip fan.zip
 rm fan.zip
-echo " done"
+echo "done"
 
 BUILDCMD="fan build.fan heruko"
 
