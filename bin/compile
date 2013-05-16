@@ -7,6 +7,7 @@ set -e
 
 
 BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
+OPT_DIR=$(cd "$BIN_DIR/../opt"; pwd)
 # parse args
 BUILD_DIR=$1
 CACHE_DIR=$2
@@ -38,7 +39,10 @@ FAN_URL="http://fan.googlecode.com/files/fantom-$FANTOM_VERSION.zip"
 
 echo -n "-----> Installing Fantom $FAN_VERSION..... "
 curl --silent --location $FAN_URL > fan.zip
-./opt/unzip fan.zip
+echo -n "-----> chomeing "
+chmod 445 $OPT_DIR/unzip 
+echo -n "-----> unziping "
+$OPT_DIR/unzip fan.zip
 rm fan.zip
 echo "done"
 
