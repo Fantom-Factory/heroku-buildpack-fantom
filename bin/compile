@@ -37,14 +37,14 @@ export FAN_HOME=$CACHE_DIR/fantom-$FAN_VERSION
 
 FAN_URL="http://fan.googlecode.com/files/fantom-$FANTOM_VERSION.zip"
 
-ls -al /app/.jdk/bin/
+ls -al /app/.jdk/bin
 
 echo "PATH = $PATH"
 
 echo "/usr/local/bin"
 ls -al /usr/local/bin
 
-ehco "/usr/bin"
+echo "/usr/bin"
 ls -al /usr/bin
 
 echo "/bin"
