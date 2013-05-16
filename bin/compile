@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+# bin/compile <build-dir> <cache-dir>
+
+# fail fast
+set -e
+
+
+
+BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
+# parse args
+BUILD_DIR=$1
+CACHE_DIR=$2
+
+
+curl --silent --location http://heroku-jvm-common.s3.amazonaws.com/jvm-buildpack-common.tar.gz | tar xz
+. bin/java
+
+# create default system.properties 
+if [ ! -f ${BUILD_DIR}/system.properties ]; then
+  echo "java.runtime.version=1.6" > ${BUILD_DIR}/system.properties
+fi
+
+# install JDK 
+javaVersion=$(detect_java_version ${BUILD_DIR})
+echo -n "-----> Installing OpenJDK ${javaVersion}... "
+install_java ${BUILD_DIR} ${javaVersion}
+jdk_overlay ${BUILD_DIR}
+echo "done"
+
+if [ ! -d $CACHE_DIR ] ; then
+  mkdir $CACHE_DIR
+fi
+
+export FAN_VERSION=1.0.63
+export FAN_HOME=$CACHE_DIR/fantom-$FAN_VERSION
+
+FAN_URL="http://fan.googlecode.com/files/fantom-$FANTOM_VERSION.zip"
+
+echo -n "-----> Installing Fantom $FAN_VERSION....."
+curl --silent --location $FAN_URL > fan.zip
+unzip fan.zip
+rm fan.zip
+echo " done"
+
+BUILDCMD="fan build.fan heruko"
+
+cd $BUILD_DIR
+
+export PATH=$CACHE_DIR/$FAN_HOME/bin:$PATH
+ 
+# build app
+echo "-----> Building Fantom app..."
+echo "       WARNING: The Gradle buildpack is currently in ALPHA."
+echo "-----> executing $BUILDCMD"
+
+$BUILDCMD 2>&1 | sed -u 's/^/       /'
+
+if [ "${PIPESTATUS[*]}" != "0 0" ]; then
+  echo " !     Failed to build app"
+  exit 1
+fi
+
+# https://devcenter.heroku.com/articles/profiled
+PROFILE_PATH="$BUILD_DIR/.profile.d/fan.sh"
+mkdir -p $(dirname $PROFILE_PATH)
+echo 'export PATH="/app/.jdk/bin:$PATH"' >> $PROFILE_PATH
+echo 'export FAN_HOME=$CACHE_DIR/fantom-$FAN_VERSION' >> $PROFILE_PATH
