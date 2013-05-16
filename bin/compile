@@ -37,6 +37,9 @@ export FAN_HOME=$CACHE_DIR/fantom-$FAN_VERSION
 
 FAN_URL="http://fan.googlecode.com/files/fantom-$FANTOM_VERSION.zip"
 
+echo -n "-----> fuck it - trying gunzip "
+gunzip -h
+
 echo -n "-----> Installing Fantom $FAN_VERSION..... "
 curl --silent --location $FAN_URL > fan.zip
 echo -n "-----> chomeing "
