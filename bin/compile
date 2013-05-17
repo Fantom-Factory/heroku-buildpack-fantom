@@ -50,12 +50,12 @@ cd $BUILD_DIR
 # build app
 echo "-----> Building Fantom app..."
 echo "       WARNING: The Gradle buildpack is currently in ALPHA."
-echo "-----> executing $BUILDCMD"
+echo "-----> executing '$BUILDCMD'"
 
-echo "PATH = $PATH"
 export PATH=$FAN_HOME/bin:$PATH
+echo "PATH = $PATH"
 
-$BUILDCMD 2>&1 | sed -u 's/^/       /'
+$FAN_HOME/bin/$BUILDCMD 2>&1 | sed -u 's/^/       /'
 
 if [ "${PIPESTATUS[*]}" != "0 0" ]; then
   echo " !     Failed to build app"
