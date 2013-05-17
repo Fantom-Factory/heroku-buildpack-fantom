@@ -81,8 +81,8 @@ PROFILE_PATH="$BUILD_DIR/.profile.d/fan.sh"
 mkdir -p $(dirname $PROFILE_PATH)
 LINE1="export PATH=/app/.jdk/bin:$PATH"
 LINE2="export FAN_HOME=$CACHE_DIR/fantom-$FAN_VERSION"
-echo '$LINE1' >> $PROFILE_PATH
-echo '$LINE2' >> $PROFILE_PATH
+echo $LINE1 >> $PROFILE_PATH
+echo $LINE2 >> $PROFILE_PATH
 
 echo ""
 echo "Path="
