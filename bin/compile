@@ -12,6 +12,8 @@ OPT_DIR=$(cd "$BIN_DIR/../opt"; pwd)
 BUILD_DIR=$1
 CACHE_DIR=$2
 
+echo "JAR INFO"
+which jar
 
 curl --silent --location http://heroku-jvm-common.s3.amazonaws.com/jvm-buildpack-common.tar.gz | tar xz
 . bin/java
@@ -64,8 +66,12 @@ echo "-----> executing '$BUILDCMD'"
 
 pwd
 ls -al
-ls -al $FAN_HOME
-ls -al $FAN_HOME/bin
+# ls -al $FAN_HOME
+# ls -al $FAN_HOME/bin
+echo "JAR INFO"
+which jar
+ls -al /app/.jdk/bin
+
 
 export PATH=$FAN_HOME/bin:$PATH
 echo "PATH = $PATH"
