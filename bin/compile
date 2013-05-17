@@ -21,10 +21,6 @@ if [ ! -f ${BUILD_DIR}/system.properties ]; then
   echo "java.runtime.version=1.6" > ${BUILD_DIR}/system.properties
 fi
 
-echo "which jar"
-which jar
-
-
 # install JDK 
 javaVersion=$(detect_java_version ${BUILD_DIR})
 echo -n "-----> Installing OpenJDK ${javaVersion}... "
@@ -41,20 +37,8 @@ export FAN_HOME=$CACHE_DIR/fantom-$FAN_VERSION
 
 FAN_URL="http://fan.googlecode.com/files/fantom-$FANTOM_VERSION.zip"
 
-echo "PATH = $PATH"
-
-# echo "/usr/local/bin"
-# ls -al /usr/local/bin
-
-# echo "/usr/bin"
-# ls -al /usr/bin
-
-# echo "/bin"
-# ls -al /bin
-
 echo -n "-----> Installing Fantom $FAN_VERSION..... "
 curl --silent --location $FAN_URL > fan.zip
-echo -n "-----> unziping "
 jar xf fan.zip
 rm fan.zip
 echo "done"
@@ -62,13 +46,14 @@ echo "done"
 BUILDCMD="fan build.fan heruko"
 
 cd $BUILD_DIR
-
-export PATH=$CACHE_DIR/$FAN_HOME/bin:$PATH
  
 # build app
 echo "-----> Building Fantom app..."
 echo "       WARNING: The Gradle buildpack is currently in ALPHA."
 echo "-----> executing $BUILDCMD"
+
+echo "PATH = $PATH"
+export PATH=$FAN_HOME/bin:$PATH
 
 $BUILDCMD 2>&1 | sed -u 's/^/       /'
 
