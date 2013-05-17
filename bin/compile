@@ -4,14 +4,15 @@
 # fail fast
 set -e
 
+# absolute path
+BIN_DIR=$(cd $(dirname $0); pwd)
+OPT_DIR=$(cd $BIN_DIR/../opt; pwd)
 
-
-BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
 # parse args
 BUILD_DIR=$1
 CACHE_DIR=$2
 
-# set this before the jdk messes with it
+# set this before the jdk install messes with it
 PATH_ORIG=$PATH
 
 curl --silent --location http://heroku-jvm-common.s3.amazonaws.com/jvm-buildpack-common.tar.gz | tar xz
@@ -43,7 +44,6 @@ FAN_URL="http://fan.googlecode.com/files/fantom-$FAN_VERSION.zip"
 
 export FAN_HOME=$BUILD_DIR/.fan
 export PATH=$FAN_HOME/bin:$PATH
-# mkdir $FAN_HOME
 
 echo -n "-----> Downloading $FAN_URL ... "
 curl --silent --location $FAN_URL > fantom-$FAN_VERSION.zip
@@ -56,28 +56,22 @@ echo -n "-----> Installing Fantom $FAN_VERSION... "
 jar xf fantom-$FAN_VERSION.zip
 
 # surprisingly Fantom permissions are not stored in the .zip
-#chmod -R +r fantom-$FAN_VERSION
 chmod +r+x fantom-$FAN_VERSION/bin/*
 mv fantom-$FAN_VERSION $FAN_HOME
 
 rm fantom-$FAN_VERSION.zip
 echo "done"
 
-pwd
-echo "$FAN_HOME"
-echo "$PATH"
-ls -al $FAN_HOME/bin
+# print fantom version details to prove it works
 echo ""
 fan -version 2>&1 | sed -u 's/^/       /'
 echo ""
  
 echo "-----> Calling Build Target: herokuPreCompile..."
-fan build.fan herokuPreCompile 2>&1 | sed -u 's/^/       /'
+fan $OPT_DIR/callBuildTarget.fan $BUILD_DIR/build.fan herokuPreCompile 2>&1 | sed -u 's/^/       /'
 
 echo "-----> Calling Build Target: compile..."
-fan build.fan compile 2>&1 | sed -u 's/^/       /'
-
-
+fan $OPT_DIR/createProcfile.fan $BUILD_DIR/build.fan $BUILD_DIR/Procfile 2>&1 | sed -u 's/^/       /'
 
 if [ "${PIPESTATUS[*]}" != "0 0" ]; then
   echo " !     Failed to build app"
@@ -87,16 +81,8 @@ fi
 # https://devcenter.heroku.com/articles/profiled
 PROFILE_PATH="$BUILD_DIR/.profile.d/fan.sh"
 mkdir -p $(dirname $PROFILE_PATH)
-# LINE1="export PATH=/app/.jdk/bin:$PATH"
-# LINE2="export FAN_HOME=$CACHE_DIR/fantom-$FAN_VERSION"
 echo "export PATH=/app/.fan/bin:/app/.jdk/bin:$PATH_ORIG" >> $PROFILE_PATH
-echo "export FAN_HOME=$CACHE_DIR/fantom-$FAN_VERSION" >> $PROFILE_PATH
+echo "export FAN_HOME=$FAN_HOME" >> $PROFILE_PATH
 
-echo ""
-echo "Path="
-echo $PATH
-
-echo ""
-echo "cating fan.sh"
-echo ""
+echo "dan.sh"
 cat $PROFILE_PATH
