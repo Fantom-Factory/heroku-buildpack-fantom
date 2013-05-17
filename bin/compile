@@ -12,9 +12,6 @@ OPT_DIR=$(cd "$BIN_DIR/../opt"; pwd)
 BUILD_DIR=$1
 CACHE_DIR=$2
 
-echo "JAR INFO"
-which jar
-
 curl --silent --location http://heroku-jvm-common.s3.amazonaws.com/jvm-buildpack-common.tar.gz | tar xz
 . bin/java
 
@@ -45,17 +42,20 @@ FAN_URL="http://fan.googlecode.com/files/fantom-$FANTOM_VERSION.zip"
 export FAN_HOME=$CACHE_DIR/fantom-$FAN_VERSION
 
 echo -n "-----> Installing Fantom $FAN_VERSION..... "
-curl --location $FAN_URL > fan.zip
-# curl --silent --location $FAN_URL > fan.zip
-jar --help
-# $BUILD_DIR/.jdk/bin/jar --help
-# $BUILD_DIR/.jdk/bin/jar xf fan.zip
-# rm fan.zip
-echo "done"
+echo -n ""
+curl --location $FAN_URL > fantom-$FAN_VERSION.zip
+# curl --silent --location $FAN_URL > fantom-$FAN_VERSION.zip
 
-echo " - LLO"
-pwd
 ls -al
+
+jar
+
+jar xf fantom-$FAN_VERSION.zip
+
+ls -al
+
+# rm fantom-$FAN_VERSION.zip
+echo "done"
 
 BUILDCMD="fan build.fan heruko"
 
