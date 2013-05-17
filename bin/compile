@@ -58,6 +58,8 @@ chmod +r+x fantom-$FAN_VERSION/bin/*
 rm fantom-$FAN_VERSION.zip
 echo "done"
 
+echo "$FAN_HOME"
+echo "$PATH"
 echo ""
 fan -version 2>&1 | sed -u 's/^/       /'
 echo ""
