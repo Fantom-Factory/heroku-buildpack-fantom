@@ -27,16 +27,19 @@ install_java ${BUILD_DIR} ${javaVersion}
 jdk_overlay ${BUILD_DIR}
 echo "done"
 
-if [ ! -d $CACHE_DIR ] ; then
-  mkdir $CACHE_DIR
-fi
-
-# change to cache dir to install fantom
-cd $CACHE_DIR
+# we have no need for the cache dir
+# if [ ! -d $CACHE_DIR ] ; then
+#   mkdir $CACHE_DIR
+# fi
+# cd $CACHE_DIR
 
 # TODO: load these from a file
 FAN_VERSION=1.0.63
 FAN_URL="http://fan.googlecode.com/files/fantom-$FAN_VERSION.zip"
+
+export FAN_HOME=$BUILD_DIR/.fan
+export PATH=$FAN_HOME/bin:$PATH
+cd $FAN_HOME
 
 echo -n "-----> Downloading $FAN_URL ... "
 curl --silent --location $FAN_URL > fantom-$FAN_VERSION.zip
@@ -48,14 +51,11 @@ echo -n "-----> Installing Fantom $FAN_VERSION... "
 # http://stackoverflow.com/questions/16599128/how-to-unzip-files-in-a-heroko-buildpack
 jar xf fantom-$FAN_VERSION.zip
 
-# Surprisingly Fantom permissions are not stored in the .zip
+# surprisingly Fantom permissions are not stored in the .zip
 chmod +r+x fantom-$FAN_VERSION/bin/*
 
 rm fantom-$FAN_VERSION.zip
 echo "done"
-
-export FAN_HOME=$CACHE_DIR/fantom-$FAN_VERSION
-export PATH=$FAN_HOME/bin:$PATH
 
 echo ""
 fan -version 2>&1 | sed -u 's/^/       /'
@@ -81,7 +81,7 @@ PROFILE_PATH="$BUILD_DIR/.profile.d/fan.sh"
 mkdir -p $(dirname $PROFILE_PATH)
 LINE1="export PATH=/app/.jdk/bin:$PATH"
 LINE2="export FAN_HOME=$CACHE_DIR/fantom-$FAN_VERSION"
-echo $LINE1 >> $PROFILE_PATH
+echo "export PATH=/app/.jdk/bin:$PATH" >> $PROFILE_PATH
 echo $LINE2 >> $PROFILE_PATH
 
 echo ""
