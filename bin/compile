@@ -46,8 +46,6 @@ echo -n ""
 curl --location $FAN_URL > fantom-$FAN_VERSION.zip
 # curl --silent --location $FAN_URL > fantom-$FAN_VERSION.zip
 
-cat fantom-$FAN_VERSION.zip
-
 ls -al
 
 jar xf fantom-$FAN_VERSION.zip
