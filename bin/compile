@@ -46,11 +46,10 @@ echo -n ""
 curl --location $FAN_URL > fantom-$FAN_VERSION.zip
 # curl --silent --location $FAN_URL > fantom-$FAN_VERSION.zip
 
-ls -al
-
 jar xf fantom-$FAN_VERSION.zip
 
-ls -al
+ls -al fantom-$FAN_VERSION
+ls -al fantom-$FAN_VERSION/bin
 
 # rm fantom-$FAN_VERSION.zip
 echo "done"
@@ -65,13 +64,6 @@ echo "       WARNING: The Gradle buildpack is currently in ALPHA."
 echo "-----> executing '$BUILDCMD'"
 
 pwd
-ls -al
-# ls -al $FAN_HOME
-# ls -al $FAN_HOME/bin
-echo "JAR INFO"
-which jar
-ls -al .jdk/bin
-
 
 export PATH=$FAN_HOME/bin:$PATH
 echo "PATH = $PATH"
