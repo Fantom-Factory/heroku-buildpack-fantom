@@ -57,7 +57,7 @@ jar xf fantom-$FAN_VERSION.zip
 
 # surprisingly Fantom permissions are not stored in the .zip
 #chmod -R +r fantom-$FAN_VERSION
-#chmod +r+x fantom-$FAN_VERSION/bin/*
+chmod +r+x fantom-$FAN_VERSION/bin/*
 mv fantom-$FAN_VERSION $FAN_HOME
 
 rm fantom-$FAN_VERSION.zip
