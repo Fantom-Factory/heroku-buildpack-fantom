@@ -69,13 +69,20 @@ echo ""
  
 echo "-----> Calling Build Target: herokuPreCompile..."
 fan $OPT_DIR/callBuildTarget.fan $BUILD_DIR/build.fan herokuPreCompile 2>&1 | sed -u 's/^/       /'
+if [ "${PIPESTATUS[*]}" != "0 0" ]; then
+  echo " !     Failed to build app"
+  exit 1
+fi
 
 echo "-----> Calling Build Target: compile..."
 fan build.fan compile 2>&1 | sed -u 's/^/       /'
+if [ "${PIPESTATUS[*]}" != "0 0" ]; then
+  echo " !     Failed to build app"
+  exit 1
+fi
 
 echo "-----> Creating Procfile..."
 fan $OPT_DIR/createProcfile.fan $BUILD_DIR/build.fan $BUILD_DIR/Procfile 2>&1 | sed -u 's/^/       /'
-
 if [ "${PIPESTATUS[*]}" != "0 0" ]; then
   echo " !     Failed to build app"
   exit 1
@@ -85,7 +92,7 @@ fi
 PROFILE_PATH="$BUILD_DIR/.profile.d/fan.sh"
 mkdir -p $(dirname $PROFILE_PATH)
 echo "export PATH=/app/.fan/bin:/app/.jdk/bin:$PATH_ORIG" >> $PROFILE_PATH
-echo "export FAN_HOME=$FAN_HOME" >> $PROFILE_PATH
+echo "export FAN_HOME=/app/.fan" >> $PROFILE_PATH
 
 echo "dan.sh"
 cat $PROFILE_PATH
