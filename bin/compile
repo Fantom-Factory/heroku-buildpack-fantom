@@ -41,7 +41,7 @@ FAN_URL="http://fan.googlecode.com/files/fantom-$FAN_VERSION.zip"
 
 export FAN_HOME=$BUILD_DIR/.fan
 export PATH=$FAN_HOME/bin:$PATH
-mkdir $FAN_HOME
+# mkdir $FAN_HOME
 
 echo -n "-----> Downloading $FAN_URL ... "
 curl --silent --location $FAN_URL > fantom-$FAN_VERSION.zip
