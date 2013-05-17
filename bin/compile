@@ -52,12 +52,12 @@ echo -n "-----> Installing Fantom $FAN_VERSION... "
 # Linux has no 'unzip' so we use 'jar' instead
 # http://stackoverflow.com/questions/16599128/how-to-unzip-files-in-a-heroko-buildpack
 jar xf fantom-$FAN_VERSION.zip
-
+ls
 # surprisingly Fantom permissions are not stored in the .zip
 chmod -R +r fantom-$FAN_VERSION
 chmod +r+x fantom-$FAN_VERSION/bin/*
 
-rm fantom-$FAN_VERSION.zip
+# rm fantom-$FAN_VERSION.zip
 echo "done"
 
 pwd
