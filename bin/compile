@@ -41,6 +41,7 @@ export FAN_HOME=$BUILD_DIR/.fan
 export PATH=$FAN_HOME/bin:$PATH
 mkdir $FAN_HOME
 cd $FAN_HOME
+pwd
 
 echo -n "-----> Downloading $FAN_URL ... "
 curl --silent --location $FAN_URL > fantom-$FAN_VERSION.zip
@@ -53,6 +54,7 @@ echo -n "-----> Installing Fantom $FAN_VERSION... "
 jar xf fantom-$FAN_VERSION.zip
 
 # surprisingly Fantom permissions are not stored in the .zip
+chmod +r -r fantom-$FAN_VERSION
 chmod +r+x fantom-$FAN_VERSION/bin/*
 
 rm fantom-$FAN_VERSION.zip
