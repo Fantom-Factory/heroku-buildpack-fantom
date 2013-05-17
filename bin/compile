@@ -33,22 +33,21 @@ fi
 
 # change to cache dir to install fantom
 cd $CACHE_DIR
-echo " - LLO"
-pwd
-ls -al
 
 FAN_VERSION=1.0.63
 FAN_URL="http://fan.googlecode.com/files/fantom-$FAN_VERSION.zip"
 export FAN_HOME=$CACHE_DIR/fantom-$FAN_VERSION
 
-echo -n "-----> Installing Fantom $FAN_VERSION..... $FAN_URL"
-echo -n ""
-curl --location $FAN_URL > fantom-$FAN_VERSION.zip
-# curl --silent --location $FAN_URL > fantom-$FAN_VERSION.zip
+echo -n "-----> Downloading $FAN_URL ..... "
+curl --silent --location $FAN_URL > fantom-$FAN_VERSION.zip
+echo "done"
 
+echo -n "-----> Installing Fantom $FAN_VERSION..... "
 jar xf fantom-$FAN_VERSION.zip
 
 ls -al fantom-$FAN_VERSION
+whoami
+chmod 777 fantom-$FAN_VERSION/bin/*
 ls -al fantom-$FAN_VERSION/bin
 
 # rm fantom-$FAN_VERSION.zip
