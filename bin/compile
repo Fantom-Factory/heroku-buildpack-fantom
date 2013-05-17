@@ -48,8 +48,8 @@ echo -n "-----> Installing Fantom $FAN_VERSION..... "
 curl --location $FAN_URL > fan.zip
 # curl --silent --location $FAN_URL > fan.zip
 jar --help
-$BUILD_DIR/.jdk/bin/jar --help
-$BUILD_DIR/.jdk/bin/jar xf fan.zip
+# $BUILD_DIR/.jdk/bin/jar --help
+# $BUILD_DIR/.jdk/bin/jar xf fan.zip
 # rm fan.zip
 echo "done"
 
