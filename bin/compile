@@ -58,6 +58,11 @@ chmod -R +r fantom-$FAN_VERSION
 chmod +r+x fantom-$FAN_VERSION/bin/*
 mv fantom-$FAN_VERSION $FAN_HOME
 
+echo ""
+pwd
+ls -al
+echo "
+
 rm fantom-$FAN_VERSION.zip
 echo "done"
 
