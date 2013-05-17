@@ -34,7 +34,7 @@ fi
 
 # change to cache dir to install fantom
 cd $CACHE_DIR
-echo "LLO"
+echo " - LLO"
 pwd
 ls -al
 
@@ -47,6 +47,10 @@ curl --silent --location $FAN_URL > fan.zip
 jar xf fan.zip
 rm fan.zip
 echo "done"
+
+echo " - LLO"
+pwd
+ls -al
 
 BUILDCMD="fan build.fan heruko"
 
