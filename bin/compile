@@ -40,7 +40,7 @@ FAN_URL="http://fan.googlecode.com/files/fantom-$FAN_VERSION.zip"
 export FAN_HOME=$BUILD_DIR/fantom
 export PATH=$FAN_HOME/bin:$PATH
 mkdir $FAN_HOME
-chomod 777 $FAN_HOME
+chmod 777 $FAN_HOME
 cd $FAN_HOME
 pwd
 
