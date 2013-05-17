@@ -50,9 +50,9 @@ echo "done"
 export FAN_HOME=$CACHE_DIR/fantom-$FAN_VERSION
 export PATH=$FAN_HOME/bin:$PATH
 
-echo -n ""
+echo ""
 fan -version 2>&1 | sed -u 's/^/       /'
-echo -n ""
+echo ""
 
 cd $BUILD_DIR
  
