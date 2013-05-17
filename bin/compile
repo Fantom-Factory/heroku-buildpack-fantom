@@ -61,7 +61,10 @@ mv fantom-$FAN_VERSION $FAN_HOME
 echo ""
 pwd
 ls -al
-echo "
+echo " ... and inside "
+ls -al .fan
+echo " ... and inside FANHOME"
+ls -al $FAN_HOME
 
 rm fantom-$FAN_VERSION.zip
 echo "done"
