@@ -4,11 +4,11 @@
 
 testDetect()
 {
-  touch ${BUILD_DIR}/build.gradle
+  touch ${BUILD_DIR}/build.fan
   
   detect
 
-  assertAppDetected "Gradle"
+  assertAppDetected "Fantom"
 }
 
 testNoDetectMissingBuildGradle()

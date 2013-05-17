@@ -34,16 +34,23 @@ fi
 # change to cache dir to install fantom
 cd $CACHE_DIR
 
+# TODO: load these from a file
 FAN_VERSION=1.0.63
 FAN_URL="http://fan.googlecode.com/files/fantom-$FAN_VERSION.zip"
 
-echo -n "-----> Downloading $FAN_URL ..... "
+echo -n "-----> Downloading $FAN_URL ... "
 curl --silent --location $FAN_URL > fantom-$FAN_VERSION.zip
 echo "done"
 
-echo -n "-----> Installing Fantom $FAN_VERSION..... "
+echo -n "-----> Installing Fantom $FAN_VERSION... "
+
+# Linux has no 'unzip' so we use 'jar' instead
+# http://stackoverflow.com/questions/16599128/how-to-unzip-files-in-a-heroko-buildpack
 jar xf fantom-$FAN_VERSION.zip
+
+# Surprisingly Fantom permissions are not stored in the .zip
 chmod +r+x fantom-$FAN_VERSION/bin/*
+
 rm fantom-$FAN_VERSION.zip
 echo "done"
 
@@ -56,12 +63,13 @@ echo ""
 
 cd $BUILD_DIR
  
-BUILDCMD="fan build.fan heruko"
-echo "-----> Building Fantom app..."
-echo "       WARNING: The Gradle buildpack is currently in ALPHA."
-echo "-----> executing '$BUILDCMD'"
+echo "-----> Calling Build Target: herokuPreCompile..."
+fan build.fan herokuPreCompile 2>&1 | sed -u 's/^/       /'
 
-$FAN_HOME/bin/$BUILDCMD 2>&1 | sed -u 's/^/       /'
+echo "-----> Calling Build Target: compile..."
+fan build.fan compile 2>&1 | sed -u 's/^/       /'
+
+
 
 if [ "${PIPESTATUS[*]}" != "0 0" ]; then
   echo " !     Failed to build app"
