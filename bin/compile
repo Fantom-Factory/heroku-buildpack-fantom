@@ -50,8 +50,6 @@ cat fantom-$FAN_VERSION.zip
 
 ls -al
 
-jar
-
 jar xf fantom-$FAN_VERSION.zip
 
 ls -al
