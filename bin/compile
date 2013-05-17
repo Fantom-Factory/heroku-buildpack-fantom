@@ -33,16 +33,15 @@ echo "done"
 # fi
 # cd $CACHE_DIR
 
-# TODO: load these from a file
+cd $BUILD_DIR
+
+# TODO: load these from a config file or sumfin
 FAN_VERSION=1.0.63
 FAN_URL="http://fan.googlecode.com/files/fantom-$FAN_VERSION.zip"
 
-export FAN_HOME=$BUILD_DIR/fantom
+export FAN_HOME=$BUILD_DIR/.fan
 export PATH=$FAN_HOME/bin:$PATH
 mkdir $FAN_HOME
-chmod 777 $FAN_HOME
-cd $FAN_HOME
-pwd
 
 echo -n "-----> Downloading $FAN_URL ... "
 curl --silent --location $FAN_URL > fantom-$FAN_VERSION.zip
@@ -53,12 +52,13 @@ echo -n "-----> Installing Fantom $FAN_VERSION... "
 # Linux has no 'unzip' so we use 'jar' instead
 # http://stackoverflow.com/questions/16599128/how-to-unzip-files-in-a-heroko-buildpack
 jar xf fantom-$FAN_VERSION.zip
-ls
+
 # surprisingly Fantom permissions are not stored in the .zip
 chmod -R +r fantom-$FAN_VERSION
 chmod +r+x fantom-$FAN_VERSION/bin/*
+mv fantom-$FAN_VERSION $FAN_HOME
 
-# rm fantom-$FAN_VERSION.zip
+rm fantom-$FAN_VERSION.zip
 echo "done"
 
 pwd
@@ -68,8 +68,6 @@ ls -al $FAN_HOME/bin
 echo ""
 fan -version 2>&1 | sed -u 's/^/       /'
 echo ""
-
-cd $BUILD_DIR
  
 echo "-----> Calling Build Target: herokuPreCompile..."
 fan build.fan herokuPreCompile 2>&1 | sed -u 's/^/       /'
