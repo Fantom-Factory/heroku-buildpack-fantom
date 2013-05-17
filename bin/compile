@@ -52,6 +52,9 @@ echo "-----> Building Fantom app..."
 echo "       WARNING: The Gradle buildpack is currently in ALPHA."
 echo "-----> executing '$BUILDCMD'"
 
+ls -al $FAN_HOME
+ls -al $FAN_HOME/bin
+
 export PATH=$FAN_HOME/bin:$PATH
 echo "PATH = $PATH"
 
