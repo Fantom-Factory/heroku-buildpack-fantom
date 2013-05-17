@@ -79,8 +79,16 @@ fi
 # https://devcenter.heroku.com/articles/profiled
 PROFILE_PATH="$BUILD_DIR/.profile.d/fan.sh"
 mkdir -p $(dirname $PROFILE_PATH)
-echo 'export PATH="/app/.jdk/bin:$PATH"' >> $PROFILE_PATH
-echo 'export FAN_HOME=$CACHE_DIR/fantom-$FAN_VERSION' >> $PROFILE_PATH
+LINE1=export PATH="/app/.jdk/bin:$PATH"
+LINE2=export FAN_HOME=$CACHE_DIR/fantom-$FAN_VERSION"
+echo '$LINE1' >> $PROFILE_PATH
+echo '$LINE2' >> $PROFILE_PATH
 
+echo ""
+echo "Path="
 echo $PATH
+
+echo ""
+echo "cating fan.sh"
+echo ""
 cat $PROFILE_PATH
