@@ -54,7 +54,7 @@ echo -n "-----> Installing Fantom $FAN_VERSION... "
 jar xf fantom-$FAN_VERSION.zip
 
 # surprisingly Fantom permissions are not stored in the .zip
-chmod +r -r fantom-$FAN_VERSION
+chmod -R +r fantom-$FAN_VERSION
 chmod +r+x fantom-$FAN_VERSION/bin/*
 
 rm fantom-$FAN_VERSION.zip
