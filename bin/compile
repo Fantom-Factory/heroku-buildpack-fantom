@@ -7,10 +7,10 @@ set -e
 
 
 BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
-OPT_DIR=$(cd "$BIN_DIR/../opt"; pwd)
 # parse args
 BUILD_DIR=$1
 CACHE_DIR=$2
+
 
 curl --silent --location http://heroku-jvm-common.s3.amazonaws.com/jvm-buildpack-common.tar.gz | tar xz
 . bin/java
@@ -45,9 +45,12 @@ echo "done"
 echo -n "-----> Installing Fantom $FAN_VERSION..... "
 jar xf fantom-$FAN_VERSION.zip
 chmod +r+x fantom-$FAN_VERSION/bin/*
-ls -al fantom-$FAN_VERSION/bin
 rm fantom-$FAN_VERSION.zip
 echo "done"
+
+echo -n ""
+fan -version 2>&1 | sed -u 's/^/       /'
+echo -n ""
 
 BUILDCMD="fan build.fan heruko"
 
@@ -58,14 +61,8 @@ echo "-----> Building Fantom app..."
 echo "       WARNING: The Gradle buildpack is currently in ALPHA."
 echo "-----> executing '$BUILDCMD'"
 
-pwd
-
 export PATH=$FAN_HOME/bin:$PATH
 echo "PATH = $PATH"
-
-$FAN_HOME/bin/fan -version 2>&1 | sed -u 's/^/       /'
-
-fan -version 2>&1 | sed -u 's/^/       /'
 
 $FAN_HOME/bin/$BUILDCMD 2>&1 | sed -u 's/^/       /'
 
