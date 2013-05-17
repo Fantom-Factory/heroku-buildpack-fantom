@@ -47,7 +47,9 @@ export FAN_HOME=$CACHE_DIR/fantom-$FAN_VERSION
 echo -n "-----> Installing Fantom $FAN_VERSION..... "
 curl --location $FAN_URL > fan.zip
 # curl --silent --location $FAN_URL > fan.zip
-jar xf fan.zip
+jar --help
+$BUILD_DIR/.jdk/bin/jar --help
+$BUILD_DIR/.jdk/bin/jar xf fan.zip
 # rm fan.zip
 echo "done"
 
@@ -70,7 +72,7 @@ ls -al
 # ls -al $FAN_HOME/bin
 echo "JAR INFO"
 which jar
-ls -al /app/.jdk/bin
+ls -al .jdk/bin
 
 
 export PATH=$FAN_HOME/bin:$PATH
