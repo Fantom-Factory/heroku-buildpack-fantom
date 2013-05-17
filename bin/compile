@@ -21,8 +21,8 @@ if [ ! -f ${BUILD_DIR}/system.properties ]; then
   echo "java.runtime.version=1.6" > ${BUILD_DIR}/system.properties
 fi
 
-echo "ls root"
-ls -al /
+echo "which jar"
+which jar
 
 
 # install JDK 
@@ -43,19 +43,19 @@ FAN_URL="http://fan.googlecode.com/files/fantom-$FANTOM_VERSION.zip"
 
 echo "PATH = $PATH"
 
-echo "/usr/local/bin"
-ls -al /usr/local/bin
+# echo "/usr/local/bin"
+# ls -al /usr/local/bin
 
-echo "/usr/bin"
-ls -al /usr/bin
+# echo "/usr/bin"
+# ls -al /usr/bin
 
-echo "/bin"
-ls -al /bin
+# echo "/bin"
+# ls -al /bin
 
 echo -n "-----> Installing Fantom $FAN_VERSION..... "
 curl --silent --location $FAN_URL > fan.zip
 echo -n "-----> unziping "
-/app/.jdk/bin/jar xf fan.zip
+jar xf fan.zip
 rm fan.zip
 echo "done"
 
