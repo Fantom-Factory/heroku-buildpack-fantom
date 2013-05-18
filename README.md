@@ -12,7 +12,7 @@ Steps to Heroku fantom fulfilment:
 4. Git push your code
 
 
-## 1. Create a Heroku fantom application
+## 1. Convert your Heroku application to fantom
 
 To run a fantom application on Heroku you must first configure your heroku app to use this `buildpack`.
 
