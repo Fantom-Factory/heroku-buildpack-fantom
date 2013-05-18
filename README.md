@@ -70,16 +70,16 @@ private Void installJar(Uri jarFile) {
 
 ## 3. Create your web process
 
-For Heroku to launch your application, create a file called `Procfile` in the root of your application. This contains the command it should run. The simplest (and most common) command is:
+For Heroku to launch your application, create a file called `Procfile` in the root of your application. This contains the command it should run. The simplest (and most common) command is just:
 
 ```
 #!bash
-web: fan <yourPodName> $PORT
+web: fan <yourPod> $PORT
 ```
 
-Which calls `yourPodName::Main.main(Str[] args)` passing in the port number your app should listen on.
+Which calls `yourPod::Main.main(Str[] args)` passing in the port number your app should listen on.
 
-In fact, this step is optional for if you don't create a `Procfile`, the fantom buildpack will create one for you - which looks just the one above!
+In fact, this step is optional. If you don't create a `Procfile`, the fantom buildpack will create one for you - which looks just the one above!
 
 See [Procfile][procfile] for more details.
 
