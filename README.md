@@ -37,7 +37,7 @@ As long as you have a `build.fan` in the root of your application, Heroku will r
 
 ## 2. Create your fantom environment
 
-When this buildpack kicks off it downloads a fresh copy of fantom (currently 1.0.63) and installs it in the directory `/app/.fan/`. 
+When this buildpack kicks off it downloads a fresh copy of fantom (currently 1.0.64) and installs it in the directory `/app/.fan/`. 
 
 Before the buildpack can compile your fantom pod, you have to download any external dependencies (such as the most excellent [afIoc][afIoc]). Do this by adding a `herokuPreComile` build target to your `build.fan`.
 
@@ -98,8 +98,8 @@ $ git push heroku master
 -----> Fetching custom git buildpack... done
 -----> Fantom app detected
 -----> Installing OpenJDK 1.6... done
------> Downloading http://fan.googlecode.com/files/fantom-1.0.63.zip ... done
------> Installing Fantom 1.0.63... done
+-----> Downloading http://fan.googlecode.com/files/fantom-1.0.64.zip ... done
+-----> Installing Fantom 1.0.64... done
 
        Fantom Launcher
        Copyright (c) 2006-2012, Brian Frank and Andy Frank
@@ -112,9 +112,9 @@ $ git push heroku master
          java.vm.version: 20.0-b12
          java.home:       /tmp/build/.jdk/jre
          fan.platform:    linux-x86_64
-         fan.version:     1.0.63
+         fan.version:     1.0.64
          fan.env:         sys::BootEnv
-         fan.home:        /app/tmp/repo.git/.cache/fantom-1.0.63
+         fan.home:        /app/tmp/repo.git/.cache/fantom-1.0.64
 
 -----> Calling Build Target: herokuPreCompile...
        afIoc  [install]  not-installed => 1.2.2
