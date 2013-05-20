@@ -39,7 +39,7 @@ echo "done"
 cd $BUILD_DIR
 
 # TODO: load these from a config file or sumfin
-FAN_VERSION=1.0.64
+FAN_VERSION=1.0.65
 FAN_URL="http://fan.googlecode.com/files/fantom-$FAN_VERSION.zip"
 
 export FAN_HOME=$BUILD_DIR/.fan
