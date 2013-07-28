@@ -2,28 +2,29 @@
 
 This is a [Heroku Buildpack][buildpack] for [Fantom][fantom]. 
 
-Use this to run your `fantom` app on the [Heroku][heroku] cloud application platform.
+Use this to run your `Fantom` app on the [Heroku][heroku] cloud application platform.
 
-Steps to Heroku fantom fulfilment:
+Steps to Heroku Fantom fulfilment:
 
-1. Convert your Heroku application to fantom 
-2. Create your fantom environment
+1. Convert your Heroku application to use Fantom 
+2. Create your Fantom environment
 3. Create your web process
 4. Git push your code
 
 
+
 ## 1. Convert your Heroku application to fantom
 
-To run a fantom application on Heroku you must first configure your heroku app to use this `buildpack`.
+To run a Fantom application on Heroku you must first configure your heroku app to use this `buildpack`.
 
-To convert an existing app to use fantom, type:
+To convert an existing Heroku app to use Fantom, type:
 
 ```
 #!bash
 $ heroku config:set BUILDPACK_URL=https://bitbucket.org/SlimerDude/heroku-buildpack-fantom.git -a myapp
 ```
 
-To create a new app that uses fantom, type:
+To create a new Heroku app that uses Fantom, type:
 
 ```
 #!bash
@@ -32,30 +33,40 @@ $ heroku create myapp --buildpack https://bitbucket.org/SlimerDude/heroku-buildp
 
 See [Using A Custom Buildpack][custom-buildpack] for more details.
 
-As long as you have a `build.fan` in the root of your application, Heroku will recognise your app as a fantom app.
+As long as you have `build.fan` in the root of your application directory, Heroku will recognise your app as a fantom app.
 
 
-## 2. Create your fantom environment
 
-When this buildpack kicks off it downloads a fresh copy of fantom (currently 1.0.65) and installs it in the directory `/app/.fan/`. 
+## 2. Create your Fantom environment
 
-Before the buildpack can compile your fantom pod, you have to download any external dependencies (such as the most excellent [afIoc][afIoc]). Do this by adding a `herokuPreComile` build target to your `build.fan`.
+When this buildpack runs it downloads a fresh copy of Fantom (currently 1.0.65) and installs it in the directory `/app/.fan/`. 
 
-Here's a sample exert from a `build.fan`:
+The buildpack then compiles your application from source by running the following 2 commands:
+
+```
+#!bash
+$ fan build.fan herokuPreComile
+
+$ fan build.fan compile
+```
+
+Because the Fantom installation is a fresh one, before your source can comple, you need to download and install any external dependencies (such as the most excellent [afIoc][afIoc]) into your Fantom environment. This is what the (optional) `herokuPreComile` build target is for.
+
+An exert from a sample `build.fan`:
 
 ```
 #!fantom
 @Target { help = "Heroku pre-compile hook, use to install dependencies" }
 Void herokuPreCompile() {
     
-    // install pods from a remote fan repository
+    // install pods from a remote fanr repository
     fanr("install -y -r http://repo.status302.com/fanr/ afIoc")
 
-    // install pods from a local fan repository
-    fanr("install -y -r file:localRepo/ afDraft")
+    // install pods from a local fanr repository
+    fanr("install -y -r file:lib/fanr/ afBedSheet")
     
     // install jar files from local
-    installJar(`lib/java/jsoup-1.7.2.jar`)
+    installJar(`lib/java/wotever-1.7.2.jar`)
 }
 
 private Void fanr(Str args) {
@@ -67,26 +78,44 @@ private Void installJar(Uri jarFile) {
 }
 ```
 
+The above example assumes the following project dir structure:
+
+```
+#!bash
+|-fan/
+|  |...
+|-lib/
+|  |-java/
+|  |  |-wotever-1.7.2.jar`
+|  |-fanr/
+|    |-afBedSheet/
+|       |-afBedSheet-1.0.x.pod
+|-build.fan
+|-Procfile
+```
+
+Note that the `lib` dir (with the jars and local fanr repository) needs to be checked in the Heroku Git repository.
+
+
 
 ## 3. Create your web process
 
-For Heroku to launch your application, create a file called `Procfile` in the root of your application. This contains the command it should run. The simplest (and most common) command is just:
+For Heroku to launch your application, it requires a file called `Procfile` in the root of your project dir that contains the command it should run. The simplest (and most common) command is just:
 
 ```
 #!bash
 web: fan <yourPod> $PORT
 ```
 
-Which calls `yourPod::Main.main(Str[] args)` passing in the port number your app should listen on.
+Which calls `yourPod::Main.main(Str[] args)` passing in the port number your web app should listen on.
 
-In fact, this step is optional. If you don't create a `Procfile`, the fantom buildpack will create one for you - which looks just the one above!
+If `Procfile` does not exist then Fantom buildpack will create one for you, containing the line mentioned above. See [Procfile][procfile] for more details.
 
-See [Procfile][procfile] for more details.
 
 
 ## 4. Git push your code
 
-To deploy and run your app on heroku, simply `git push` your code as normal and hopefully you should see something like this:
+To deploy and run your app on Heroku, simply `git push` your code as normal and hopefully you should see something like this:
 
 ```
 #!bash
@@ -117,7 +146,7 @@ $ git push heroku master
          fan.home:        /app/tmp/repo.git/.cache/fantom-1.0.65
 
 -----> Calling Build Target: herokuPreCompile...
-       afIoc  [install]  not-installed => 1.2.2
+       afIoc  [install]  not-installed => 1.3.10
        Downloading afIoc ... Complete
        Download successful (1 pods)
        Installing afIoc ... Complete
@@ -129,7 +158,7 @@ $ git push heroku master
              WritePod [file:/tmp/build/.fan/lib/fan/<myapp>.pod]
        BUILD SUCCESS [100ms]!
 -----> Creating Procfile...
-       web: fan afPlagueScanner $PORT
+       web: fan <myapp> $PORT
 -----> Discovering process types
        Procfile declares types -> web
 
@@ -137,6 +166,8 @@ $ git push heroku master
 -----> Launching... done, v69
        http://<myapp>.herokuapp.com deployed to Heroku
 ```
+
+Have fun!
 
 [fantom]: http://fantom.org/
 [heroku]: http://www.heroku.com/
