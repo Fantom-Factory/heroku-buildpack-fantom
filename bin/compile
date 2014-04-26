@@ -31,8 +31,8 @@ cat ${BUILD_DIR}/system.properties
 # set this before the jdk install messes with it
 PATH_ORIG=$PATH
 
-#curl --silent --location http://heroku-jvm-common.s3.amazonaws.com/jvm-buildpack-common.tar.gz | tar xz
-#. bin/java
+curl --silent --location http://heroku-jvm-common.s3.amazonaws.com/jvm-buildpack-common.tar.gz | tar xz
+. bin/java
 
 ## install JDK 
 #javaVersion=$(detect_java_version ${BUILD_DIR})
