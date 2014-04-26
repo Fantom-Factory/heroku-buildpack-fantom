@@ -21,14 +21,14 @@ To convert an existing Heroku app to use Fantom, type:
 
 ```
 #!bash
-$ heroku config:set BUILDPACK_URL=https://bitbucket.org/SlimerDude/heroku-buildpack-fantom.git -a myapp
+$ heroku config:set BUILDPACK_URL=https://bitbucket.org/AlienFactory/heroku-buildpack-fantom.git -a myapp
 ```
 
 To create a new Heroku app that uses Fantom, type:
 
 ```
 #!bash
-$ heroku create myapp --buildpack https://bitbucket.org/SlimerDude/heroku-buildpack-fantom.git
+$ heroku create myapp --buildpack https://bitbucket.org/AlienFactory/heroku-buildpack-fantom.git
 ```
 
 See [Using A Custom Buildpack][custom-buildpack] for more details.
@@ -89,7 +89,7 @@ The above example assumes the following project dir structure:
 |  |  |-wotever-1.7.2.jar`
 |  |-fanr/
 |    |-afBedSheet/
-|       |-afBedSheet-1.0.x.pod
+|       |-afBedSheet-1.3.x.pod
 |-build.fan
 |-Procfile
 ```
@@ -141,12 +141,12 @@ $ git push heroku master
          java.vm.version: 20.0-b12
          java.home:       /tmp/build/.jdk/jre
          fan.platform:    linux-x86_64
-         fan.version:     1.0.65
+         fan.version:     1.0.66
          fan.env:         sys::BootEnv
-         fan.home:        /app/tmp/repo.git/.cache/fantom-1.0.65
+         fan.home:        /app/tmp/repo.git/.cache/fantom-1.0.66
 
 -----> Calling Build Target: herokuPreCompile...
-       afIoc  [install]  not-installed => 1.3.10
+       afIoc  [install]  not-installed => 1.5.6
        Downloading afIoc ... Complete
        Download successful (1 pods)
        Installing afIoc ... Complete
