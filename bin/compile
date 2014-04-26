@@ -4,6 +4,7 @@
 # fail fast
 set -e
 
+# fantom download urls
 FANTOM_URL_1_0_66="https://bitbucket.org/fantom/fan-1.0/downloads/fantom-1.0.66.zip"
 FANTOM_URL_1_0_65="http://fan.googlecode.com/files/fantom-1.0.65.zip"
 
@@ -19,11 +20,7 @@ CACHE_DIR=$2
 if [ ! -f ${BUILD_DIR}/system.properties ]; then
   echo "java.runtime.version=1.6" > ${BUILD_DIR}/system.properties
   echo "fantom.version=1.0.66" >> ${BUILD_DIR}/system.properties
-  #echo "fantom.version=1.0.66" > ${BUILD_DIR}/system.properties
 fi
-
-echo "----system.properties"
-cat ${BUILD_DIR}/system.properties
 
 
 
@@ -54,17 +51,10 @@ echo "done"
 
 cd $BUILD_DIR
 
-# we need the FAN_VERSION because the zip entires are `/fantom-1.0.66/bin/fan.exe`
+# we need the FAN_VERSION because it's inside the the zip entires! 
+# e.g. /fantom-1.0.66/bin/fan.exe
 FAN_VERSION=$(get_app_system_value ${baseDir}/system.properties "fantom.version")
-echo "FAN_VERSION = $FAN_VERSION"
-FAN_URL_VAR=$(eval echo \$FANTOM_URL_$(eval echo $FAN_VERSION | tr "\." "_"))
-echo "getting 3 $FAN_URL_VAR"
-echo "FAN VAR: $FAN_URL_VAR"
-FAN_URL=$(eval echo \$FAN_URL_VAR)
-
-  #minorJdkVersion=\$JDK_URL_1_$(expr "${jdkVersion}" : '1.\([6-8]\)')
- # jdkUrl=$(eval echo \$JDK_URL_1_${minorJdkVersion}${osSuffix})
- # echo "${jdkUrl}"
+FAN_URL=$(eval echo \$FANTOM_URL_$(eval echo $FAN_VERSION | tr "\." "_"))
 
 export FAN_HOME=$BUILD_DIR/.fan
 export PATH=$FAN_HOME/bin:$PATH
@@ -90,7 +80,11 @@ echo "done"
 echo ""
 fan -version 2>&1 | sed -u 's/^/       /'
 echo ""
- 
+
+
+
+# ---- Run Fantom Build Tasks ----
+
 echo "-----> Calling Build Target: herokuPreCompile..."
 fan $OPT_DIR/callBuildTarget.fan $BUILD_DIR/build.fan herokuPreCompile 2>&1 | sed -u 's/^/       /'
 if [ "${PIPESTATUS[*]}" != "0 0" ]; then
