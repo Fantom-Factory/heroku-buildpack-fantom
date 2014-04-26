@@ -35,12 +35,12 @@ PATH_ORIG=$PATH
 curl --silent --location http://heroku-jvm-common.s3.amazonaws.com/jvm-buildpack-common.tar.gz | tar xz
 . bin/java
 
-## install JDK 
-#javaVersion=$(detect_java_version ${BUILD_DIR})
-#echo -n "-----> Installing OpenJDK ${javaVersion}... "
-#install_java ${BUILD_DIR} ${javaVersion}
-#jdk_overlay ${BUILD_DIR}
-#echo "done"
+# install JDK 
+javaVersion=$(detect_java_version ${BUILD_DIR})
+echo -n "-----> Installing OpenJDK ${javaVersion}... "
+install_java ${BUILD_DIR} ${javaVersion}
+jdk_overlay ${BUILD_DIR}
+echo "done"
 
 # we have no need for the cache dir
 # if [ ! -d $CACHE_DIR ] ; then
