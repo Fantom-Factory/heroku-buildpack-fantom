@@ -17,9 +17,9 @@ CACHE_DIR=$2
 
 # create default system.properties 
 if [ ! -f ${BUILD_DIR}/system.properties ]; then
-  #echo "java.runtime.version=1.6" > ${BUILD_DIR}/system.properties
-  #echo "fantom.version=1.0.66" >> ${BUILD_DIR}/system.properties
-  echo "fantom.version=1.0.66" > ${BUILD_DIR}/system.properties
+  echo "java.runtime.version=1.6" > ${BUILD_DIR}/system.properties
+  echo "fantom.version=1.0.66" >> ${BUILD_DIR}/system.properties
+  #echo "fantom.version=1.0.66" > ${BUILD_DIR}/system.properties
 fi
 
 echo "----system.properties"
@@ -55,12 +55,10 @@ echo "done"
 cd $BUILD_DIR
 
 # we need the FAN_VERSION because the zip entires are `/fantom-1.0.66/bin/fan.exe`
-echo -n "getting 1"
 FAN_VERSION=$(get_app_system_value ${baseDir}/system.properties "fantom.version")
-echo -n "getting 2"
-echo -n "FAN V: $FAN_VERSION"
+echo "FAN_VERSION = $FAN_VERSION"
 FAN_URL_VAR=$(eval echo \$FANTOM_URL_$(eval echo $FAN_VERSION | tr "\." "_"))
-echo -n "getting 3"
+echo "getting 3 $FAN_URL_VAR"
 echo "FAN VAR: $FAN_URL_VAR"
 FAN_URL=$(eval echo \$FAN_URL_VAR)
 
