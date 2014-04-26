@@ -4,6 +4,23 @@
 # fail fast
 set -e
 
+# ---- Common Utils ----
+
+get_property_value() {
+  local file=${1?"No file specified"}
+  local key=${2?"No key specified"}
+ 
+  # escape for regex
+  local escaped_key=$(echo $key | sed "s/\./\\\./g")
+
+  [ -f $file ] && \
+  grep -E ^$escaped_key[[:space:]=]+ $file | \
+  sed -E -e "s/$escaped_key([\ \t]*=[\ \t]*|[\ \t]+)([A-Za-z0-9\./:-]*).*/\2/g"
+}
+
+# ---- Common Utils ----
+
+
 FANTOM_DOWNLOAD_URL="https://bitbucket.org/fantom/fan-1.0/downloads/fantom-1.0.66.zip"
 
 # absolute path
@@ -96,19 +113,3 @@ PROFILE_PATH="$BUILD_DIR/.profile.d/fan.sh"
 mkdir -p $(dirname $PROFILE_PATH)
 echo "export PATH=/app/.fan/bin:/app/.jdk/bin:$PATH_ORIG" >> $PROFILE_PATH
 echo "export FAN_HOME=/app/.fan" >> $PROFILE_PATH
-
-
-
-# ---- Common Utils ----
-
-get_property_value() {
-  local file=${1?"No file specified"}
-  local key=${2?"No key specified"}
- 
-  # escape for regex
-  local escaped_key=$(echo $key | sed "s/\./\\\./g")
-
-  [ -f $file ] && \
-  grep -E ^$escaped_key[[:space:]=]+ $file | \
-  sed -E -e "s/$escaped_key([\ \t]*=[\ \t]*|[\ \t]+)([A-Za-z0-9\./:-]*).*/\2/g"
-}
