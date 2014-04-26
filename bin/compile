@@ -17,8 +17,9 @@ CACHE_DIR=$2
 
 # create default system.properties 
 if [ ! -f ${BUILD_DIR}/system.properties ]; then
-  echo "java.runtime.version=1.6" > ${BUILD_DIR}/system.properties
-  echo "fantom.version=1.0.66" >> ${BUILD_DIR}/system.properties
+  #echo "java.runtime.version=1.6" > ${BUILD_DIR}/system.properties
+  #echo "fantom.version=1.0.66" >> ${BUILD_DIR}/system.properties
+  echo "fantom.version=1.0.66" > ${BUILD_DIR}/system.properties
 fi
 
 echo "----system.properties"
