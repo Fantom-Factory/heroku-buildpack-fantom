@@ -44,13 +44,7 @@ echo "done"
 
 cd $BUILD_DIR
 
-# TODO: load these from a config file or sumfin
-
-FAN_URL=$(get_app_system_value ${baseDir}/system.properties "fantom.download.url")
-
-#FAN_VERSION=1.0.65
-#FAN_URL="http://fan.googlecode.com/files/fantom-$FAN_VERSION.zip"
-
+FAN_URL=$(get_property_value ${baseDir}/system.properties "fantom.download.url")
 export FAN_HOME=$BUILD_DIR/.fan
 export PATH=$FAN_HOME/bin:$PATH
 
@@ -102,3 +96,19 @@ PROFILE_PATH="$BUILD_DIR/.profile.d/fan.sh"
 mkdir -p $(dirname $PROFILE_PATH)
 echo "export PATH=/app/.fan/bin:/app/.jdk/bin:$PATH_ORIG" >> $PROFILE_PATH
 echo "export FAN_HOME=/app/.fan" >> $PROFILE_PATH
+
+
+
+# ---- Common Utils ----
+
+get_property_value() {
+  local file=${1?"No file specified"}
+  local key=${2?"No key specified"}
+ 
+  # escape for regex
+  local escaped_key=$(echo $key | sed "s/\./\\\./g")
+
+  [ -f $file ] && \
+  grep -E ^$escaped_key[[:space:]=]+ $file | \
+  sed -E -e "s/$escaped_key([\ \t]*=[\ \t]*|[\ \t]+)([A-Za-z0-9\./:-]*).*/\2/g"
+}
