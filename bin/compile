@@ -54,8 +54,11 @@ curl --silent --location http://heroku-jvm-common.s3.amazonaws.com/jvm-buildpack
 cd $BUILD_DIR
 
 # we need the FAN_VERSION because the zip entires are `/fantom-1.0.66/bin/fan.exe`
+echo -n "getting 1"
 FAN_VERSION=$(get_app_system_value ${baseDir}/system.properties "fantom.version")
-echo "FAN V: $FAN_VERSION"
+
+echo -n "getting 2"
+echo -n "FAN V: $FAN_VERSION"
 FAN_URL=$(eval echo $FAN_VERSION | tr "\." "_")
 echo "FAN U: $FAN_URL"
 
