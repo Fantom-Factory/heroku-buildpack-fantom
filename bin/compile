@@ -4,24 +4,8 @@
 # fail fast
 set -e
 
-# ---- Common Utils ----
-
-get_property_value() {
-  local file=${1?"No file specified"}
-  local key=${2?"No key specified"}
- 
-  # escape for regex
-  local escaped_key=$(echo $key | sed "s/\./\\\./g")
-
-  [ -f $file ] && \
-  grep -E ^$escaped_key[[:space:]=]+ $file | \
-  sed -E -e "s/$escaped_key([\ \t]*=[\ \t]*|[\ \t]+)([A-Za-z0-9\./:-]*).*/\2/g"
-}
-
-# ---- Common Utils ----
-
-
-FANTOM_DOWNLOAD_URL="https://bitbucket.org/fantom/fan-1.0/downloads/fantom-1.0.66.zip"
+FANTOM_URL_1_0_66="https://bitbucket.org/fantom/fan-1.0/downloads/fantom-1.0.66.zip"
+FANTOM_URL_1_0_65="http://fan.googlecode.com/files/fantom-1.0.65.zip"
 
 # absolute path
 BIN_DIR=$(cd $(dirname $0); pwd)
@@ -31,27 +15,31 @@ OPT_DIR=$(cd $BIN_DIR/../opt; pwd)
 BUILD_DIR=$1
 CACHE_DIR=$2
 
-# set this before the jdk install messes with it
-PATH_ORIG=$PATH
-
-curl --silent --location http://heroku-jvm-common.s3.amazonaws.com/jvm-buildpack-common.tar.gz | tar xz
-. bin/java
-
 # create default system.properties 
 if [ ! -f ${BUILD_DIR}/system.properties ]; then
   echo "java.runtime.version=1.6" > ${BUILD_DIR}/system.properties
-  echo "fantom.download.url=${FANTOM_DOWNLOAD_URL}" >> ${BUILD_DIR}/system.properties
+  echo "fantom.version=1.0.66" >> ${BUILD_DIR}/system.properties
 fi
 
 echo "----system.properties"
 cat ${BUILD_DIR}/system.properties
 
-# install JDK 
-javaVersion=$(detect_java_version ${BUILD_DIR})
-echo -n "-----> Installing OpenJDK ${javaVersion}... "
-install_java ${BUILD_DIR} ${javaVersion}
-jdk_overlay ${BUILD_DIR}
-echo "done"
+
+
+# ---- Install Java JDK ----
+
+# set this before the jdk install messes with it
+PATH_ORIG=$PATH
+
+#curl --silent --location http://heroku-jvm-common.s3.amazonaws.com/jvm-buildpack-common.tar.gz | tar xz
+#. bin/java
+
+## install JDK 
+#javaVersion=$(detect_java_version ${BUILD_DIR})
+#echo -n "-----> Installing OpenJDK ${javaVersion}... "
+#install_java ${BUILD_DIR} ${javaVersion}
+#jdk_overlay ${BUILD_DIR}
+#echo "done"
 
 # we have no need for the cache dir
 # if [ ! -d $CACHE_DIR ] ; then
@@ -59,27 +47,40 @@ echo "done"
 # fi
 # cd $CACHE_DIR
 
+
+
+# ---- Install Fantom ----
+
 cd $BUILD_DIR
 
-FAN_URL=$(get_property_value ${baseDir}/system.properties "fantom.download.url")
+# we need the FAN_VERSION because the zip entires are `/fantom-1.0.66/bin/fan.exe`
+FAN_VERSION=$(get_app_system_value ${baseDir}/system.properties "fantom.version")
+echo "FAN V: $FAN_VERSION"
+FAN_URL=$(eval echo $FAN_VERSION | tr "\." "_")
+echo "FAN U: $FAN_URL"
+
+  #minorJdkVersion=\$JDK_URL_1_$(expr "${jdkVersion}" : '1.\([6-8]\)')
+ # jdkUrl=$(eval echo \$JDK_URL_1_${minorJdkVersion}${osSuffix})
+ # echo "${jdkUrl}"
+
 export FAN_HOME=$BUILD_DIR/.fan
 export PATH=$FAN_HOME/bin:$PATH
 
 echo -n "-----> Downloading $FAN_URL ... "
-curl --silent --location $FAN_URL > fantom.zip
+curl --silent --location $FAN_URL > fantom-$FAN_VERSION.zip
 echo "done"
 
-echo -n "-----> Installing Fantom... "
+echo -n "-----> Installing Fantom $FAN_VERSION... "
 
 # Linux has no 'unzip' so we use 'jar' instead
 # http://stackoverflow.com/questions/16599128/how-to-unzip-files-in-a-heroko-buildpack
-jar xf fantom.zip
+jar xf fantom-$FAN_VERSION.zip
 
 # surprisingly Fantom permissions are not stored in the .zip
-chmod +r+x fantom/bin/*
-mv fantom $FAN_HOME
+chmod +r+x fantom-$FAN_VERSION/bin/*
+mv fantom-$FAN_VERSION $FAN_HOME
 
-rm fantom.zip
+rm fantom-$FAN_VERSION.zip
 echo "done"
 
 # print fantom version details to prove it works
