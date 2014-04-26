@@ -56,9 +56,10 @@ cd $BUILD_DIR
 
 # we need the FAN_VERSION because the zip entires are `/fantom-1.0.66/bin/fan.exe`
 echo -n "getting 1"
-FAN_VERSION=$(get_app_system_value ${baseDir}/system.properties "fantom.version")
-
+fanVersion=$(get_app_system_value ${baseDir}/system.properties "fantom.version")
 echo -n "getting 2"
+FAN_VERSION=$fanVersion
+echo -n "getting 3"
 echo -n "FAN V: $FAN_VERSION"
 FAN_URL=$(eval echo $FAN_VERSION | tr "\." "_")
 echo "FAN U: $FAN_URL"
