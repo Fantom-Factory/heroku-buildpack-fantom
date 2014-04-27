@@ -12,7 +12,7 @@ Contents:
 
 ##Heroku Deployment
 
-Steps to Heroku Fantom fulfilment:
+Steps to Heroku Fantom fulfillment:
 
 1. Convert your Heroku application to use Fantom 
 2. Create your Fantom environment
@@ -58,7 +58,7 @@ C:\> fan build.fan herokuPreCompile
 C:\> fan build.fan compile
 ```
 
-Because the Fantom installation is a fresh one, before your source can comple, it needs to download and install all external pods dependencies (such as the most excellent [afIoc][afIoc]) into your Fantom environment. This is what the (optional) `herokuPreComile` build target is for.
+Because the Fantom installation is a fresh one, before your source can compile, it needs to download and install all external pods dependencies (such as the most excellent [afIoc][afIoc]) into your Fantom environment. This is what the (optional) `herokuPreComile` build target is for.
 
 See [](#blah) and [](#blah) for details
 
