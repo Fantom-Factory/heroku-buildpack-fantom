@@ -161,7 +161,7 @@ You can install pods from a local `fanr` repository as long as it is checked int
 You could install [BedSheet][afBedSheet] like this:
 
 ```
-#!fantom
+#!java
 @Target { help = "Heroku pre-compile hook, use to install dependencies" }
 Void herokuPreCompile() {
 
@@ -183,7 +183,7 @@ This is useful when you're using pods developed by yourself, or ones that are no
 Most external pods are available publicly, usually from [Status302 Repository][status302-repo]. Here is a modified script that downloads and installs pods from there:
 
 ```
-#!fantom
+#!java
 @Target { help = "Heroku pre-compile hook, use to install dependencies" }
 Void herokuPreCompile() {
 
@@ -203,7 +203,7 @@ private Void fanr(Str args) {
 If *ALL* your dependant pods are available from the same repository (probably [Status302][status302-repo]), then here is a useful script that installs everything for you:
 
 ```
-#!fantom
+#!java
 @Target { help = "Heroku pre-compile hook, use to install dependencies" }
 Void herokuPreCompile() {
 
@@ -227,7 +227,7 @@ private Void installFromRepo(Str[] pods, Str repo) {
 }
 ```
 
-Sample output from an install should then look like:
+Output from a successful install should look like:
 
 ```
 #!bash
@@ -247,7 +247,7 @@ Downloading afIocEnv ... Complete
 Downloading afPlastic ... Complete
 Downloading afBedSheet ... Complete
 
-Download successful (13 pods)
+Download successful (5 pods)
 
 Installing afIocConfig ... Complete
 Installing afIoc ... Complete
@@ -276,7 +276,7 @@ Sometimes you have a dependency on a Java library. To install these, again make 
 You can install them like this:
 
 ```
-#!fantom
+#!java
 @Target { help = "Heroku pre-compile hook, use to install dependencies" }
 Void herokuPreCompile() {
    
