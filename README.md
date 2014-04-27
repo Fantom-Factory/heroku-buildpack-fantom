@@ -293,7 +293,7 @@ private Void installJar(Uri jarFile) {
 
 ## Installing specific versions of Java and Fantom
 
-By default this build pack installs `OpenJDK 1.6` and `Fantom 1.0.66`. Should you wish to use different versions then create a `system.properties` file in the root of your project, next to your `build.fan`:
+By default this build pack installs `OpenJDK 1.6` and `Fantom 1.0.66`. Should you wish to install different versions then create a `system.properties` file in the root of your project, next to your `build.fan`:
 
 ```
 #!bash
