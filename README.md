@@ -6,7 +6,7 @@ Use this to run your `Fantom` application on the [Heroku][heroku] cloud applicat
 
 See [Fantom-Factory][fantom-factory-articles] for further articles on Fantom and Heroku.
 
-
+[TOC]
 
 ##Heroku Deployment
 
