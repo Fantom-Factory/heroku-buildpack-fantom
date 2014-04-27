@@ -1,4 +1,4 @@
-# Heroku Buildpack: Fantom
+# Heroku Buildpack for Fantom
 
 This is a [Heroku Buildpack][buildpack] for [Fantom][fantom]. 
 
