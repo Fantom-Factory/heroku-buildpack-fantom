@@ -217,6 +217,7 @@ Void herokuPreCompile() {
 }
 
 private Void installFromRepo(Str[] pods, Str repo) {
+    if (pods.isEmpty) return
     cmd := "install -errTrace -y -r ${repo}".split.add(pods.join(","))
     log.info("")
     log.info("Installing pods...")
