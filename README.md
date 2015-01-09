@@ -217,6 +217,7 @@ Void herokuPreCompile() {
 }
 
 private Void installFromRepo(Str[] pods, Str repo) {
+    if (pods.isEmpty) return
     cmd := "install -errTrace -y -r ${repo}".split.add(pods.join(","))
     log.info("")
     log.info("Installing pods...")
@@ -323,7 +324,7 @@ Java:
 Fantom:
 
 * 1.0.65
-* 1.0.66
+* 1.0.67
 * 1.0.67
 
 For more details about setting the Java version, see [Choose a JDK](https://github.com/heroku/heroku-buildpack-java#choose-a-jdk). You could also download the [Java Common Buildpack](http://heroku-jvm-common.s3.amazonaws.com/jvm-buildpack-common.tar.gz) and inspect the `bin/java` script.
