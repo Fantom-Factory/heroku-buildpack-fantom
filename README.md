@@ -47,7 +47,7 @@ As long as you have `build.fan` in the root of your application directory, Herok
 
 ### 2. Create your Fantom environment
 
-When this buildpack runs it downloads a fresh copy of Fantom (v1.0.66 at time of writing) and installs it in the directory `/app/.fan/`. 
+When this buildpack runs it downloads a fresh copy of Fantom (v1.0.67 at time of writing) and installs it in the directory `/app/.fan/`. 
 
 The buildpack then compiles your application from source by running the following 2 commands:
 
@@ -101,8 +101,8 @@ C:\> git push heroku master
 -----> Fetching custom git buildpack... done
 -----> Fantom app detected
 -----> Installing OpenJDK 1.6... done
------> Downloading http://fantom-1.0.66.zip ... done
------> Installing Fantom 1.0.66... done
+-----> Downloading http://fantom-1.0.67.zip ... done
+-----> Installing Fantom 1.0.67... done
 
        Fantom Launcher
        Copyright (c) 2006-2013, Brian Frank and Andy Frank
@@ -115,9 +115,9 @@ C:\> git push heroku master
          java.vm.version: 20.0-b12
          java.home:       /tmp/build/.jdk/jre
          fan.platform:    linux-x86_64
-         fan.version:     1.0.66
+         fan.version:     1.0.67
          fan.env:         sys::BootEnv
-         fan.home:        /app/tmp/repo.git/.cache/fantom-1.0.66
+         fan.home:        /app/tmp/repo.git/.cache/fantom-1.0.67
 
 -----> Calling Build Target: herokuPreCompile...
 -----> Calling Build Target: compile...
@@ -293,7 +293,7 @@ private Void installJar(Uri jarFile) {
 
 ## Installing specific versions of Java and Fantom
 
-By default this build pack installs `OpenJDK 1.6` and `Fantom 1.0.66`. Should you wish to install different versions then create a `system.properties` file in the root of your project, next to your `build.fan`:
+By default this build pack installs `OpenJDK 1.6` and `Fantom 1.0.67`. Should you wish to install different versions then create a `system.properties` file in the root of your project, next to your `build.fan`:
 
 ```
 #!bash
@@ -307,7 +307,7 @@ A sample `system.properties` file looks like;
 
 ```
 java.runtime.version=1.6
-fantom.version=1.0.66
+fantom.version=1.0.67
 ```
 
 Note if the file exists, then both keys need to be defined.
@@ -324,6 +324,7 @@ Fantom:
 
 * 1.0.65
 * 1.0.66
+* 1.0.67
 
 For more details about setting the Java version, see [Choose a JDK](https://github.com/heroku/heroku-buildpack-java#choose-a-jdk). You could also download the [Java Common Buildpack](http://heroku-jvm-common.s3.amazonaws.com/jvm-buildpack-common.tar.gz) and inspect the `bin/java` script.
 
