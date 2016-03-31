@@ -17,10 +17,22 @@ OPT_DIR=$(cd $BIN_DIR/../opt; pwd)
 BUILD_DIR=$1
 CACHE_DIR=$2
 
-# create default system.properties 
+# we use "heroku.props"
+if [ ! -f ${BUILD_DIR}/heroku.props ]; then
+
+  if [ ! -f ${BUILD_DIR}/system.properties ]; then
+    # create a default "heroku.props" if it doesn't exist
+    echo "java.runtime.version=1.6" > ${BUILD_DIR}/heroku.props
+    echo "fantom.version=1.0.67" >> ${BUILD_DIR}/heroku.props
+  else
+    # copy legacy file over
+    cp ${BUILD_DIR}/system.properties ${BUILD_DIR}/heroku.props
+  fi
+fi
+
+# but the Java Buildpack uses "system.properties" - Doh!
 if [ ! -f ${BUILD_DIR}/system.properties ]; then
-  echo "java.runtime.version=1.6" > ${BUILD_DIR}/system.properties
-  echo "fantom.version=1.0.67" >> ${BUILD_DIR}/system.properties
+  cp ${BUILD_DIR}/heroku.props ${BUILD_DIR}/system.properties
 fi
 
 
@@ -54,8 +66,11 @@ cd $BUILD_DIR
 
 # we need the FAN_VERSION because it's inside the the zip entires! 
 # e.g. /fantom-1.0.67/bin/fan.exe
-FAN_VERSION=$(get_app_system_value ${baseDir}/system.properties "fantom.version")
-FAN_URL=$(eval echo \$FANTOM_URL_$(eval echo $FAN_VERSION | tr "\." "_"))
+FAN_VERSION=$(get_app_system_value ${baseDir}/heroku.props "fantom.version")
+FAN_URL=$(get_app_system_value ${baseDir}/heroku.props "fantom.downloadUrl")
+if [ -z "$FAN_URL" ]; then
+  FAN_URL=$(eval echo \$FANTOM_URL_$(eval echo $FAN_VERSION | tr "\." "_"))
+fi
 
 export FAN_HOME=$BUILD_DIR/.fan
 export PATH=$FAN_HOME/bin:$PATH

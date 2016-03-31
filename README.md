@@ -29,14 +29,14 @@ To convert an existing Heroku app to use Fantom, type:
 
 ```
 #!bash
-C:\> heroku config:set BUILDPACK_URL=https://bitbucket.org/AlienFactory/heroku-buildpack-fantom.git -a myapp
+C:\> heroku config:set BUILDPACK_URL=https://bitbucket.org/AlienFactory/heroku-buildpack-fantom.git -a <myapp>
 ```
 
 To create a new Heroku app that uses Fantom, type:
 
 ```
 #!bash
-C:\> heroku create myapp --buildpack https://bitbucket.org/AlienFactory/heroku-buildpack-fantom.git
+C:\> heroku create <myapp> --buildpack https://bitbucket.org/AlienFactory/heroku-buildpack-fantom.git
 ```
 
 See [Using A Custom Buildpack][custom-buildpack] for more details.
@@ -180,7 +180,7 @@ This is useful when you're using pods developed by yourself, or ones that are no
 
 ### From a remote repository
 
-Most external pods are available publicly, usually from [Status302 Repository][status302-repo]. Here is a modified script that downloads and installs pods from there:
+Most external pods are available publicly, usually from the [Eggbox Repository][eggbox-repo]. Here is a modified script that downloads and installs pods from there:
 
 ```
 #!java
@@ -188,7 +188,7 @@ Most external pods are available publicly, usually from [Status302 Repository][s
 Void herokuPreCompile() {
 
     // install pods from a remote fanr repository
-    fanr("install -y -r http://repo.status302.com/fanr/ afIoc")
+    fanr("install -y -r http://pods.fantomfactory.org/fanr/ afIoc")
 }
 
 private Void fanr(Str args) {
@@ -200,7 +200,7 @@ private Void fanr(Str args) {
 
 ### Example Script
 
-If *ALL* your dependant pods are available from the same repository (probably [Status302][status302-repo]), then here is a useful script that installs everything for you:
+If *ALL* your dependant pods are available from the same repository (probably [Eggbox][eggbox-repo]), then here is a useful script that installs everything for you:
 
 ```
 #!java
@@ -213,7 +213,7 @@ Void herokuPreCompile() {
         pod := Pod.find(depend.name, false)
         return (pod == null) ? true : !depend.match(pod.version)
     }
-    installFromRepo(pods, "http://repo.status302.com/fanr/") // repo = "file:lib/fanr/"
+    installFromRepo(pods, "http://pods.fantomfactory.org/fanr/") // repo = "file:lib/fanr/"
 }
 
 private Void installFromRepo(Str[] pods, Str repo) {
@@ -234,7 +234,7 @@ Output from a successful install should look like:
 #!bash
 
 Installing pods...
-> fanr install -errTrace -y -r http://repo.status302.com/fanr/ "..."
+> fanr install -errTrace -y -r http://pods.fantomfactory.org/fanr/ "..."
 
 afBedSheet         [install]  not-installed => 1.3.4
 afIoc              [install]  not-installed => 1.5.4
@@ -294,17 +294,17 @@ private Void installJar(Uri jarFile) {
 
 ## Installing specific versions of Java and Fantom
 
-By default this build pack installs `OpenJDK 1.6` and `Fantom 1.0.67`. Should you wish to install different versions then create a `system.properties` file in the root of your project, next to your `build.fan`:
+By default this build pack installs `OpenJDK 1.6` and `Fantom 1.0.67`. Should you wish to install different versions then create a `heroku.props` file in the root of your project, next to your `build.fan`:
 
 ```
 #!bash
 |-fan/
 |  |...
 |-build.fan
-`-system.properties
+`-heroku.props
 ```
 
-A sample `system.properties` file looks like;
+A sample `heroku.props` file looks like:
 
 ```
 java.runtime.version=1.6
@@ -324,10 +324,22 @@ Java:
 Fantom:
 
 * 1.0.65
-* 1.0.67
+* 1.0.66
 * 1.0.67
 
 For more details about setting the Java version, see [Choose a JDK](https://github.com/heroku/heroku-buildpack-java#choose-a-jdk). You could also download the [Java Common Buildpack](http://heroku-jvm-common.s3.amazonaws.com/jvm-buildpack-common.tar.gz) and inspect the `bin/java` script.
+
+Note that this buildpack also creates a file called `system.properties` that is used by the Java Buildpack. So if you create such a file, it *will be overwritten!*
+
+You may also specify an alternative download location for Fantom in `heroku.props`:
+
+```
+java.runtime.version=1.6
+fantom.version=1.0.67
+fantom.downloadUrl=http://example.com/fantom-custom.zip
+```
+
+Note that if you specify `fantom.downloadUrl` you still need to specify `fantom.version` and `java.runtime.version`.
 
 
 
@@ -347,4 +359,4 @@ Have fun!
 [afBedSheet]: http://www.fantomfactory.org/pods/afBedSheet
 [afIoc]: http://www.fantomfactory.org/pods/afIoc
 [fantom-factory-articles]: http://www.fantomfactory.org/tags/heroku
-[status302-repo]: http://repo.status302.com/
+[eggbox-repo]: http://pods.fantomfactory.org/
