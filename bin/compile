@@ -21,17 +21,21 @@ CACHE_DIR=$2
 if [ ! -f ${BUILD_DIR}/heroku.props ]; then
 
   if [ ! -f ${BUILD_DIR}/system.properties ]; then
-    # create a default "heroku.props" if it doesn't exist
+    echo -n "-----> Creating default file 'heroku.props' ... "
     echo "java.runtime.version=1.6" > ${BUILD_DIR}/heroku.props
     echo "fantom.version=1.0.67" >> ${BUILD_DIR}/heroku.props
+    echo "done"
   else
-    # copy legacy file over
+    echo "-----> Using deprecated file 'system.properties'"
     cp ${BUILD_DIR}/system.properties ${BUILD_DIR}/heroku.props
   fi
+else
+    echo "-----> Using file 'heroku.props'"
 fi
 
 # but the Java Buildpack uses "system.properties" - Doh!
 if [ ! -f ${BUILD_DIR}/system.properties ]; then
+  echo "-----> Copying 'heroku.props' to 'system.properties' for use by JVM Buildpack"
   cp ${BUILD_DIR}/heroku.props ${BUILD_DIR}/system.properties
 fi
 
