@@ -71,6 +71,7 @@ cd $BUILD_DIR
 # we need the FAN_VERSION because it's inside the the zip entires! 
 # e.g. /fantom-1.0.67/bin/fan.exe
 
+# http://stackoverflow.com/questions/4990575/need-bash-shell-script-for-reading-name-value-pairs-from-a-file
 while IFS="=" read -r key value; do
   case "$key" in
     "fantom.version")     FAN_VERSION="$value" ;;
@@ -78,12 +79,8 @@ while IFS="=" read -r key value; do
   esac
 done < "${baseDir}/heroku.props"
 
-echo "-----> fantom.version = $FAN_VERSION"
-#FAN_URL=$(get_app_system_value ${baseDir}/heroku.props "fantom.downloadUrl")
-echo "-----> fantom.downloadUrl = $FAN_URL"
 if [ -z $FAN_URL ]; then
   FAN_URL=$(eval echo \$FANTOM_URL_$(eval echo $FAN_VERSION | tr "\." "_"))
-  echo "-----> fantom.downloadUrl - $FAN_URL"
 fi
 
 export FAN_HOME=$BUILD_DIR/.fan
