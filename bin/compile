@@ -21,7 +21,7 @@ CACHE_DIR=$2
 if [ ! -f ${BUILD_DIR}/heroku.props ]; then
 
   if [ ! -f ${BUILD_DIR}/system.properties ]; then
-    echo -n "-----> Creating default file 'heroku.props' ... "
+    echo -n "-----> Creating file 'heroku.props' ... "
     echo "java.runtime.version=1.6" > ${BUILD_DIR}/heroku.props
     echo "fantom.version=1.0.67" >> ${BUILD_DIR}/heroku.props
     echo "done"
@@ -72,8 +72,10 @@ cd $BUILD_DIR
 # e.g. /fantom-1.0.67/bin/fan.exe
 FAN_VERSION=$(get_app_system_value ${baseDir}/heroku.props "fantom.version")
 FAN_URL=$(get_app_system_value ${baseDir}/heroku.props "fantom.downloadUrl")
-if [ -z "$FAN_URL" ]; then
+echo "-----> fantom.downloadUrl = $FAN_URL"
+if [ -z $FAN_URL ]; then
   FAN_URL=$(eval echo \$FANTOM_URL_$(eval echo $FAN_VERSION | tr "\." "_"))
+  echo "-----> fantom.downloadUrl - $FAN_URL"
 fi
 
 export FAN_HOME=$BUILD_DIR/.fan
