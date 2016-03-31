@@ -68,9 +68,20 @@ echo "done"
 
 cd $BUILD_DIR
 
+echo "fudge 1"
+  while IFS="=" read -r key value; do
+    case "$key" in
+      "fantom.version") fan1="$value" ;;
+      "fantom.downloadUrl") fan2="$value" ;;
+    esac
+  done < "$file"
+echo "fudge $fan1"
+echo "fudge $fan2"
+
 # we need the FAN_VERSION because it's inside the the zip entires! 
 # e.g. /fantom-1.0.67/bin/fan.exe
 FAN_VERSION=$(get_app_system_value ${baseDir}/heroku.props "fantom.version")
+echo "-----> fantom.version = $FAN_VERSION"
 FAN_URL=$(get_app_system_value ${baseDir}/heroku.props "fantom.downloadUrl")
 echo "-----> fantom.downloadUrl = $FAN_URL"
 if [ -z $FAN_URL ]; then
