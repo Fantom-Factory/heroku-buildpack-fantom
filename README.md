@@ -1,4 +1,7 @@
 # Heroku Buildpack for Fantom
+---
+[![Made for: Fantom](http://img.shields.io/badge/made_for-Fantom-lightgray.svg)](http://fantom.org/)
+![Licence: MIT](http://img.shields.io/badge/licence-MIT-blue.svg)
 
 This is a [Heroku Buildpack][buildpack] for [Fantom][fantom]. 
 
