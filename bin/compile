@@ -5,6 +5,7 @@
 set -e
 
 # fantom download urls
+FANTOM_URL_1_0_68="https://bitbucket.org/fantomfactory/fantom-nightly-builds/downloads/fantom-1.0.68.001.zip"
 FANTOM_URL_1_0_67="https://bitbucket.org/fantom/fan-1.0/downloads/fantom-1.0.67.zip"
 FANTOM_URL_1_0_66="https://bitbucket.org/fantom/fan-1.0/downloads/fantom-1.0.66.zip"
 FANTOM_URL_1_0_65="http://fan.googlecode.com/files/fantom-1.0.65.zip"
