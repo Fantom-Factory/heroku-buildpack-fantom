@@ -88,7 +88,7 @@ if [ ! "$FAN_URL" ]; then
   fi
 fi
 
-export FAN_HOME=$BUILD_DIR/.fan
+export FAN_HOME=$BUILD_DIR/.fan/
 export PATH=$FAN_HOME/bin:$PATH
 
 echo -n "-----> Downloading $FAN_URL ... "
