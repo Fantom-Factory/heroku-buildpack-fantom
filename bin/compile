@@ -80,9 +80,13 @@ while IFS="=" read -r key value; do
   esac
 done < "${baseDir}/heroku.props"
 
-if [ -z $FAN_URL ]; then
+if [ ! "$FAN_URL" ]; then
+  echo "-----> making new fan URL"
   FAN_URL=$(eval echo \$FANTOM_URL_$(eval echo $FAN_VERSION | tr "\." "_"))
+else
+  echo "-----> got fan URL"
 fi
+echo "FAN_URL = $FAN_URL"
 
 export FAN_HOME=$BUILD_DIR/.fan
 export PATH=$FAN_HOME/bin:$PATH
