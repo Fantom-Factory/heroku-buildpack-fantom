@@ -287,7 +287,7 @@ Void herokuPreCompile() {
 }
 
 private Void installJar(Uri jarFile) {
-    (scriptDir + jarFile).copyInto(devHomeDir + `lib/java/ext/`, ["overwrite" : true])		
+    (scriptDir + jarFile).copyInto(Env.cur.homeDir + `lib/java/ext/`, ["overwrite" : true])		
 }
 ```
 
