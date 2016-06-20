@@ -63,8 +63,6 @@ C:\> fan build.fan compile
 
 Because the Fantom installation is a fresh one, before your source can compile, it needs to download and install all external pods dependencies (such as the most excellent [afIoc][afIoc]) into your Fantom environment. This is what the (optional) `herokuPreComile` build target is for.
 
-See [](#blah) and [](#blah) for details
-
 
 
 ### 3. Create your web process
