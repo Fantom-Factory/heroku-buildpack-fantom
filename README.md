@@ -63,6 +63,8 @@ C:\> fan build.fan compile
 
 Because the Fantom installation is a fresh one, before your source can compile, it needs to download and install all external pods dependencies (such as the most excellent [afIoc][afIoc]) into your Fantom environment. This is what the (optional) `herokuPreComile` build target is for.
 
+Note that the `compile` build target is customisable.
+
 
 
 ### 3. Create your web process
@@ -293,9 +295,9 @@ private Void installJar(Uri jarFile) {
 
 
 
-## Installing specific versions of Java and Fantom
+## Customising the Buildpack
 
-By default this build pack installs `OpenJDK 1.6` and `Fantom 1.0.67`. Should you wish to install different versions then create a `heroku.props` file in the root of your project, next to your `build.fan`:
+The buildpack can be customised by placing a `heroku.props` file in the root of your project, next to your `build.fan`:
 
 ```
 #!bash
@@ -310,18 +312,46 @@ A sample `heroku.props` file looks like:
 ```
 java.runtime.version=1.6
 fantom.version=1.0.67
+fantom.downloadUrl=http://example.com/fantom-custom.zip
+fantom.buildTarget=compile
 ```
 
-Note if the file exists, then both keys need to be defined.
+Note that (due to bash script restrictions) you **must** have a trailing new line `\n` character on the last line of `heroku.props`.
 
-At the time of writing only the following versions are supported:
+
+
+### Java Version
+
+By default this buildpack installs `OpenJDK 1.6`, should you wish to install a different version then edit `heroku.props`:
+
+```
+java.runtime.version=1.8
+```
+
+At the time of writing the following versions are supported:
 
 Java:
 
 * 1.6
 * 1.7
 * 1.8
- 
+
+For more details about setting the Java version, see [Choose a JDK](https://github.com/heroku/heroku-buildpack-java#choose-a-jdk). You could also download the [Java Common Buildpack](http://heroku-jvm-common.s3.amazonaws.com/jvm-buildpack-common.tar.gz) and inspect the `bin/java` script.
+
+Note that this buildpack also creates a file called `system.properties` that is used by the Java Buildpack. So if you create such a file, it *will be overwritten!*
+
+
+
+### Fantom Version
+
+By default this buildpack installs `Fantom 1.0.67`, should you wish to install a different version then edit `heroku.props`:
+
+```
+fantom.version=1.0.68
+```
+
+At the time of writing the following versions are supported:
+
 Fantom:
 
 * 1.0.65
@@ -329,19 +359,24 @@ Fantom:
 * 1.0.67
 * 1.0.68
 
-For more details about setting the Java version, see [Choose a JDK](https://github.com/heroku/heroku-buildpack-java#choose-a-jdk). You could also download the [Java Common Buildpack](http://heroku-jvm-common.s3.amazonaws.com/jvm-buildpack-common.tar.gz) and inspect the `bin/java` script.
-
-Note that this buildpack also creates a file called `system.properties` that is used by the Java Buildpack. So if you create such a file, it *will be overwritten!*
-
-You may also specify an alternative download location for Fantom in `heroku.props`:
+You may also specify an alternative download location for Fantom:
 
 ```
-java.runtime.version=1.6
 fantom.version=1.0.67
 fantom.downloadUrl=http://example.com/fantom-custom.zip
 ```
 
-Note that if you specify `fantom.downloadUrl` you still need to specify `fantom.version` and `java.runtime.version`.
+Note that if you specify `fantom.downloadUrl` you must also specify `fantom.version`.
+
+
+
+### Custom Build Target
+
+To call a custom build target called on `build.fan`, edit `heroku.props`:
+
+```
+fantom.buildTarget=herokuCompile
+```
 
 
 

@@ -18,27 +18,53 @@ OPT_DIR=$(cd $BIN_DIR/../opt; pwd)
 BUILD_DIR=$1
 CACHE_DIR=$2
 
-# we use "heroku.props"
-if [ ! -f ${BUILD_DIR}/heroku.props ]; then
 
-  if [ ! -f ${BUILD_DIR}/system.properties ]; then
-    echo -n "-----> Creating file 'heroku.props' ... "
-    echo "java.runtime.version=1.6" > ${BUILD_DIR}/heroku.props
-    echo "fantom.version=1.0.67" >> ${BUILD_DIR}/heroku.props
-    echo "done"
-  else
-    echo "-----> Using deprecated file 'system.properties'"
+
+# ---- Read Heroku Props ----
+
+# Note we need the FAN_VERSION because it's inside the the zip entires! 
+# e.g. /fantom-1.0.67/bin/fan.exe
+
+# set default values
+FAN_VERSION="1.0.67"
+FAN_BUILD_TARGET="compile"
+JAVA_VERSION="1.6"
+
+if [ ! -f ${BUILD_DIR}/heroku.props ]; then
+  if [ -f ${BUILD_DIR}/system.properties ]; then
+    echo "-----> WARN: Copying deprecated 'system.properties' to 'heroku.props'"
     cp ${BUILD_DIR}/system.properties ${BUILD_DIR}/heroku.props
   fi
-else
-    echo "-----> Using file 'heroku.props'"
 fi
 
-# but the Java Buildpack uses "system.properties" - Doh!
-if [ ! -f ${BUILD_DIR}/system.properties ]; then
-  echo "-----> Copying 'heroku.props' to 'system.properties' for use by JVM Buildpack"
-  cp ${BUILD_DIR}/heroku.props ${BUILD_DIR}/system.properties
+if [ -f ${BUILD_DIR}/heroku.props ]; then
+  echo "-----> Reading file 'heroku.props'"
+  
+  # http://stackoverflow.com/questions/4990575/need-bash-shell-script-for-reading-name-value-pairs-from-a-file
+  while IFS="=" read -r key value; do
+    case "$key" in
+      "fantom.version")       FAN_VERSION="$value" ;;
+      "fantom.downloadUrl")   FAN_URL="$value" ;;
+      "fantom.buildTarget")   FAN_BUILD_TARGET="$value" ;;
+      "java.runtime.version") JAVA_VERSION="$value" ;;
+    esac
+  done < "${BUILD_DIR}/heroku.props"
 fi
+
+if [ ! "$FAN_URL" ]; then
+  FAN_URL=$(eval echo \$FANTOM_URL_$(eval echo $FAN_VERSION | tr "\." "_"))
+
+  if [ ! "$FAN_URL" ]; then
+    echo "-----> Unknown Fantom version: $FAN_VERSION"
+  fi
+fi
+
+echo ""
+echo "-----> Java version        : $JAVA_VERSION"
+echo "-----> Fantom version      : $FAN_VERSION"
+echo "-----> Fantom download URL : $FAN_URL"
+echo "-----> Fantom build target : $FAN_BUILD_TARGET"
+echo ""
 
 
 
@@ -46,6 +72,13 @@ fi
 
 # set this before the jdk install messes with it
 PATH_ORIG=$PATH
+
+# create "system.properties" as used by the Java Buildpack
+if [ ! -f ${BUILD_DIR}/system.properties ]; then
+  echo -n "-----> Creating file 'system.properties' for use by JVM Buildpack... "
+  echo "java.runtime.version=$JAVA_VERSION" > ${BUILD_DIR}/system.properties
+  echo "done"
+fi
 
 curl --silent --location http://heroku-jvm-common.s3.amazonaws.com/jvm-buildpack-common.tar.gz | tar xz
 . bin/java
@@ -68,25 +101,6 @@ echo "done"
 # ---- Install Fantom ----
 
 cd $BUILD_DIR
-
-# we need the FAN_VERSION because it's inside the the zip entires! 
-# e.g. /fantom-1.0.67/bin/fan.exe
-
-# http://stackoverflow.com/questions/4990575/need-bash-shell-script-for-reading-name-value-pairs-from-a-file
-while IFS="=" read -r key value; do
-  case "$key" in
-    "fantom.version")     FAN_VERSION="$value" ;;
-    "fantom.downloadUrl") FAN_URL="$value" ;;
-  esac
-done < "${baseDir}/heroku.props"
-
-if [ ! "$FAN_URL" ]; then
-  FAN_URL=$(eval echo \$FANTOM_URL_$(eval echo $FAN_VERSION | tr "\." "_"))
-
-  if [ ! "$FAN_URL" ]; then
-    echo "-----> Unknown Fantom version: $FAN_VERSION"
-  fi
-fi
 
 export FAN_HOME=$BUILD_DIR/.fan/
 export PATH=$FAN_HOME/bin:$PATH
@@ -124,8 +138,8 @@ if [ "${PIPESTATUS[*]}" != "0 0" ]; then
   exit 1
 fi
 
-echo "-----> Calling Build Target: compile..."
-fan build.fan compile 2>&1 | sed -u 's/^/       /'
+echo "-----> Calling Build Target: $FAN_BUILD_TARGET..."
+fan build.fan $FAN_BUILD_TARGET 2>&1 | sed -u 's/^/       /'
 if [ "${PIPESTATUS[*]}" != "0 0" ]; then
   echo " !     Failed to build app"
   exit 1
