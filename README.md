@@ -165,7 +165,7 @@ You can install pods from a local `fanr` repository as long as it is checked int
 |  |...
 |-lib-fanr/
 |  `-afBedSheet/
-|     `-afBedSheet-1.3.x.pod
+|     `-afBedSheet-1.5.x.pod
 `-build.fan
 ```
 
@@ -401,7 +401,7 @@ Have fun!
 [buildpack]: http://devcenter.heroku.com/articles/buildpacks
 [custom-buildpack]: https://devcenter.heroku.com/articles/third-party-buildpacks#using-a-custom-buildpack
 [procfile]: https://devcenter.heroku.com/articles/procfile
-[afBedSheet]: http://www.fantomfactory.org/pods/afBedSheet
-[afIoc]: http://www.fantomfactory.org/pods/afIoc
+[afBedSheet]: http://pods.fantomfactory.org/pods/afBedSheet
+[afIoc]: http://pods.fantomfactory.org/pods/afIoc
 [fantom-factory-articles]: http://www.fantomfactory.org/tags/heroku
 [eggbox-repo]: http://pods.fantomfactory.org/
