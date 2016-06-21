@@ -330,19 +330,17 @@ Note that (due to bash script restrictions) you **must** have a trailing new lin
 
 ### Java Version
 
-By default this buildpack installs `OpenJDK 1.6`, should you wish to install a different version then edit `heroku.props`:
+By default this buildpack installs *OpenJDK 1.6*, should you wish to install a different version then edit `heroku.props`:
 
 ```
 java.runtime.version=1.8
 ```
 
-At the time of writing the following versions are supported:
+At the time of writing the following Java versions are supported:
 
-Java:
-
-* 1.6
-* 1.7
 * 1.8
+* 1.7
+* 1.6
 
 For more details about setting the Java version, see [Choose a JDK](https://github.com/heroku/heroku-buildpack-java#choose-a-jdk). You could also download the [Java Common Buildpack](http://heroku-jvm-common.s3.amazonaws.com/jvm-buildpack-common.tar.gz) and inspect the `bin/java` script.
 
@@ -358,14 +356,12 @@ By default this buildpack installs `Fantom 1.0.67`, should you wish to install a
 fantom.version=1.0.68
 ```
 
-At the time of writing the following versions are supported:
+At the time of writing the following Fantom versions are supported:
 
-Fantom:
-
-* 1.0.65
-* 1.0.66
-* 1.0.67
 * 1.0.68
+* 1.0.67
+* 1.0.66
+* 1.0.65
 
 You may also specify an alternative download location for Fantom:
 
