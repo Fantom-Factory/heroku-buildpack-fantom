@@ -101,10 +101,18 @@ To deploy and run your application on Heroku, simply `git push` your code as nor
 
 C:\> git push heroku master
 
------> Fetching custom git buildpack... done
+-----> Fetching set buildpack... done
 -----> Fantom app detected
+
+-----> Reading file 'heroku.props'...
+-----> Java version        : 1.6
+-----> Fantom version      : 1.0.67
+-----> Fantom download URL : https://xxx/fantom-1.0.67.zip
+-----> Fantom build target : compile
+
+-----> Creating file 'system.properties' for use by JVM Buildpack... done
 -----> Installing OpenJDK 1.6... done
------> Downloading http://fantom-1.0.67.zip ... done
+-----> Downloading http://xxx/fantom-1.0.67.zip ... done
 -----> Installing Fantom 1.0.67... done
 
        Fantom Launcher

@@ -37,8 +37,9 @@ if [ ! -f ${BUILD_DIR}/heroku.props ]; then
   fi
 fi
 
+echo ""
 if [ -f ${BUILD_DIR}/heroku.props ]; then
-  echo "-----> Reading file 'heroku.props'"
+  echo "-----> Reading file 'heroku.props'...:"
   
   # http://stackoverflow.com/questions/4990575/need-bash-shell-script-for-reading-name-value-pairs-from-a-file
   while IFS="=" read -r key value; do
@@ -59,7 +60,6 @@ if [ ! "$FAN_URL" ]; then
   fi
 fi
 
-echo ""
 echo "-----> Java version        : $JAVA_VERSION"
 echo "-----> Fantom version      : $FAN_VERSION"
 echo "-----> Fantom download URL : $FAN_URL"
