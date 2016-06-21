@@ -350,7 +350,7 @@ Note that this buildpack also creates a file called `system.properties` that is 
 
 ### Fantom Version
 
-By default this buildpack installs `Fantom 1.0.67`, should you wish to install a different version then edit `heroku.props`:
+By default this buildpack installs *Fantom 1.0.67*, should you wish to install a different version then edit `heroku.props`:
 
 ```
 fantom.version=1.0.68
