@@ -4,7 +4,19 @@
 # fail fast
 set -e
 
-# fantom download urls
+# fantom download urls - let's future proof a couple of versions!
+FANTOM_URL_1_0_79="https://bitbucket.org/fantom/fan-1.0/downloads/fantom-1.0.79.zip"
+FANTOM_URL_1_0_78="https://bitbucket.org/fantom/fan-1.0/downloads/fantom-1.0.78.zip"
+FANTOM_URL_1_0_77="https://bitbucket.org/fantom/fan-1.0/downloads/fantom-1.0.77.zip"
+FANTOM_URL_1_0_76="https://bitbucket.org/fantom/fan-1.0/downloads/fantom-1.0.76.zip"
+FANTOM_URL_1_0_75="https://bitbucket.org/fantom/fan-1.0/downloads/fantom-1.0.75.zip"
+FANTOM_URL_1_0_74="https://bitbucket.org/fantom/fan-1.0/downloads/fantom-1.0.74.zip"
+FANTOM_URL_1_0_73="https://bitbucket.org/fantom/fan-1.0/downloads/fantom-1.0.73.zip"
+FANTOM_URL_1_0_72="https://bitbucket.org/fantom/fan-1.0/downloads/fantom-1.0.72.zip"
+FANTOM_URL_1_0_71="https://bitbucket.org/fantom/fan-1.0/downloads/fantom-1.0.71.zip"
+FANTOM_URL_1_0_70="https://bitbucket.org/fantom/fan-1.0/downloads/fantom-1.0.70.zip"
+
+FANTOM_URL_1_0_69="https://bitbucket.org/fantom/fan-1.0/downloads/fantom-1.0.69.zip"
 FANTOM_URL_1_0_68="https://bitbucket.org/fantom/fan-1.0/downloads/fantom-1.0.68.zip"
 FANTOM_URL_1_0_67="https://bitbucket.org/fantom/fan-1.0/downloads/fantom-1.0.67.zip"
 FANTOM_URL_1_0_66="https://bitbucket.org/fantom/fan-1.0/downloads/fantom-1.0.66.zip"
