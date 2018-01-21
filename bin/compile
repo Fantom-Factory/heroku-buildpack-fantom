@@ -169,3 +169,4 @@ PROFILE_PATH="$BUILD_DIR/.profile.d/fan.sh"
 mkdir -p $(dirname $PROFILE_PATH)
 echo "export PATH=/app/.fan/bin:/app/.jdk/bin:$PATH_ORIG" >> $PROFILE_PATH
 echo "export FAN_HOME=/app/.fan" >> $PROFILE_PATH
+
