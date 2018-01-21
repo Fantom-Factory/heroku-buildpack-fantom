@@ -118,7 +118,7 @@ export FAN_HOME=$BUILD_DIR/.fan/
 export PATH=$FAN_HOME/bin:$PATH
 
 echo -n "-----> Downloading $FAN_URL ... "
-curl --location $FAN_URL > fantom-$FAN_VERSION.zip
+curl --silent --location $FAN_URL > fantom-$FAN_VERSION.zip
 echo "done"
 
 echo -n "-----> Installing Fantom $FAN_VERSION... "
