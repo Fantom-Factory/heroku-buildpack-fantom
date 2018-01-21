@@ -6,3 +6,4 @@ if [ -f $1/build.fan ]; then
 else
   echo "no" && exit 1
 fi
+
