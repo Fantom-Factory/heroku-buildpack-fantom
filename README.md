@@ -50,7 +50,7 @@ As long as you have `build.fan` in the root of your application directory, Herok
 
 ### 2. Create your Fantom environment
 
-When this buildpack runs it downloads a fresh copy of Fantom (v1.0.67 at time of writing) and installs it in the directory `/app/.fan/`. 
+When this buildpack runs it downloads a fresh copy of Fantom (v1.0.70 at time of writing) and installs it in the directory `/app/.fan/`. 
 
 The buildpack then compiles your application from source by running the following 2 commands:
 
@@ -105,30 +105,30 @@ C:\> git push heroku master
 -----> Fantom app detected
 
 -----> Reading file 'heroku.props'...
------> Java version        : 1.6
------> Fantom version      : 1.0.67
------> Fantom download URL : https://xxx/fantom-1.0.67.zip
+-----> Java version        : 1.8
+-----> Fantom version      : 1.0.70
+-----> Fantom download URL : https://xxx/fantom-1.0.70.zip
 -----> Fantom build target : compile
 
 -----> Creating file 'system.properties' for use by JVM Buildpack... done
------> Installing OpenJDK 1.6... done
------> Downloading http://xxx/fantom-1.0.67.zip ... done
------> Installing Fantom 1.0.67... done
+-----> Installing OpenJDK 1.8... done
+-----> Downloading http://xxx/fantom-1.0.70.zip ... done
+-----> Installing Fantom 1.0.70... done
 
        Fantom Launcher
        Copyright (c) 2006-2013, Brian Frank and Andy Frank
        Licensed under the Academic Free License version 3.0
 
        Java Runtime:
-         java.version:    1.6.0_27
+         java.version:    1.8.0_101
          java.vm.name:    OpenJDK 64-Bit Server VM
          java.vm.vendor:  Sun Microsystems Inc.
          java.vm.version: 20.0-b12
          java.home:       /tmp/build/.jdk/jre
          fan.platform:    linux-x86_64
-         fan.version:     1.0.67
+         fan.version:     1.0.70
          fan.env:         sys::BootEnv
-         fan.home:        /app/tmp/repo.git/.cache/fantom-1.0.67
+         fan.home:        /app/tmp/repo.git/.cache/fantom-1.0.70
 
 -----> Calling Build Target: herokuPreCompile...
 -----> Calling Build Target: compile...
@@ -330,7 +330,7 @@ Note that (due to bash script restrictions) you **must** have a trailing new lin
 
 ### Java Version
 
-By default this buildpack installs *OpenJDK 1.6*, should you wish to install a different version then edit `heroku.props`:
+By default this buildpack installs *OpenJDK 1.8*, should you wish to install a different version then edit `heroku.props`:
 
 ```
 java.runtime.version=1.8
@@ -350,7 +350,7 @@ Note that this buildpack also creates a file called `system.properties` that is 
 
 ### Fantom Version
 
-By default this buildpack installs *Fantom 1.0.67*, should you wish to install a different version then edit `heroku.props`:
+By default this buildpack installs *Fantom 1.0.70*, should you wish to install a different version then edit `heroku.props`:
 
 ```
 fantom.version=1.0.68
@@ -358,6 +358,8 @@ fantom.version=1.0.68
 
 At the time of writing the following Fantom versions are supported:
 
+* 1.0.70
+* 1.0.69
 * 1.0.68
 * 1.0.67
 * 1.0.66
