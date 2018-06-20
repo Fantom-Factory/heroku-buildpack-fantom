@@ -13,7 +13,7 @@ Contents:
 
 [TOC]
 
-##Heroku Deployment
+## Heroku Deployment
 
 Steps to Heroku Fantom fulfillment:
 
@@ -32,14 +32,14 @@ To convert an existing Heroku app to use Fantom, type:
 
 ```
 #!bash
-C:\> heroku config:set BUILDPACK_URL=https://bitbucket.org/AlienFactory/heroku-buildpack-fantom.git -a <myapp>
+C:\> heroku config:set BUILDPACK_URL=https://github.com/SlimerDude/heroku-buildpack-fantom.git -a <myapp>
 ```
 
 To create a new Heroku app that uses Fantom, type:
 
 ```
 #!bash
-C:\> heroku create <myapp> --buildpack https://bitbucket.org/AlienFactory/heroku-buildpack-fantom.git
+C:\> heroku create <myapp> --buildpack https://github.com/SlimerDude/heroku-buildpack-fantom.git
 ```
 
 See [Using A Custom Buildpack][custom-buildpack] for more details.
@@ -394,12 +394,12 @@ Licensed under the MIT Licence. See `licence.txt` for details.
 
 Have fun!
 
-[fantom]: http://fantom.org/
+[fantom]: http://fantom-lang.org/
 [heroku]: http://www.heroku.com/
 [buildpack]: http://devcenter.heroku.com/articles/buildpacks
 [custom-buildpack]: https://devcenter.heroku.com/articles/third-party-buildpacks#using-a-custom-buildpack
 [procfile]: https://devcenter.heroku.com/articles/procfile
-[afBedSheet]: http://pods.fantomfactory.org/pods/afBedSheet
-[afIoc]: http://pods.fantomfactory.org/pods/afIoc
+[afBedSheet]: http://eggbox.fantomfactory.org/pods/afBedSheet
+[afIoc]: http://eggbox.fantomfactory.org/pods/afIoc
 [fantom-factory-articles]: http://www.fantomfactory.org/tags/heroku
-[eggbox-repo]: http://pods.fantomfactory.org/
+[eggbox-repo]: http://eggbox.fantomfactory.org/
