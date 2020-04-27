@@ -32,14 +32,14 @@ To convert an existing Heroku app to use Fantom, type:
 
 ```
 #!bash
-C:\> heroku config:set BUILDPACK_URL=https://github.com/SlimerDude/heroku-buildpack-fantom.git -a <myapp>
+C:\> heroku config:set BUILDPACK_URL=https://github.com/Fantom-Factory/heroku-buildpack-fantom.git -a <myapp>
 ```
 
 To create a new Heroku app that uses Fantom, type:
 
 ```
 #!bash
-C:\> heroku create <myapp> --buildpack https://github.com/SlimerDude/heroku-buildpack-fantom.git
+C:\> heroku create <myapp> --buildpack https://github.com/Fantom-Factory/heroku-buildpack-fantom.git
 ```
 
 See [Using A Custom Buildpack][custom-buildpack] for more details.
@@ -50,7 +50,7 @@ As long as you have `build.fan` in the root of your application directory, Herok
 
 ### 2. Create your Fantom environment
 
-When this buildpack runs it downloads a fresh copy of Fantom (v1.0.70 at time of writing) and installs it in the directory `/app/.fan/`. 
+When this buildpack runs it downloads a fresh copy of Fantom (v1.0.74 at time of writing) and installs it in the directory `/app/.fan/`. 
 
 The buildpack then compiles your application from source by running the following 2 commands:
 
@@ -106,14 +106,14 @@ C:\> git push heroku master
 
 -----> Reading file 'heroku.props'...
 -----> Java version        : 1.8
------> Fantom version      : 1.0.70
------> Fantom download URL : https://xxx/fantom-1.0.70.zip
+-----> Fantom version      : 1.0.74
+-----> Fantom download URL : https://xxx/fantom-1.0.74.zip
 -----> Fantom build target : compile
 
 -----> Creating file 'system.properties' for use by JVM Buildpack... done
 -----> Installing OpenJDK 1.8... done
------> Downloading http://xxx/fantom-1.0.70.zip ... done
------> Installing Fantom 1.0.70... done
+-----> Downloading http://xxx/fantom-1.0.74.zip ... done
+-----> Installing Fantom 1.0.74... done
 
        Fantom Launcher
        Copyright (c) 2006-2013, Brian Frank and Andy Frank
@@ -126,9 +126,9 @@ C:\> git push heroku master
          java.vm.version: 20.0-b12
          java.home:       /tmp/build/.jdk/jre
          fan.platform:    linux-x86_64
-         fan.version:     1.0.70
+         fan.version:     1.0.74
          fan.env:         sys::BootEnv
-         fan.home:        /app/tmp/repo.git/.cache/fantom-1.0.70
+         fan.home:        /app/tmp/repo.git/.cache/fantom-1.0.74
 
 -----> Calling Build Target: herokuPreCompile...
 -----> Calling Build Target: compile...
@@ -199,7 +199,7 @@ Most external pods are available publicly, usually from the [Eggbox Repository][
 Void herokuPreCompile() {
 
     // install pods from a remote fanr repository
-    fanr("install -y -r http://pods.fantomfactory.org/fanr/ afIoc")
+    fanr("install -y -r http://eggbox.fantomfactory.org/fanr/ afIoc")
 }
 
 private Void fanr(Str args) {
@@ -224,7 +224,7 @@ Void herokuPreCompile() {
         pod := Pod.find(depend.name, false)
         return (pod == null) ? true : !depend.match(pod.version)
     }
-    installFromRepo(pods, "http://pods.fantomfactory.org/fanr/") // repo = "file:lib/fanr/"
+    installFromRepo(pods, "http://eggbox.fantomfactory.org/fanr/") // repo = "file:lib/fanr/"
 }
 
 private Void installFromRepo(Str[] pods, Str repo) {
@@ -318,10 +318,11 @@ The buildpack can be customised by placing a `heroku.props` file in the root of 
 A sample `heroku.props` file looks like:
 
 ```
-java.runtime.version=1.6
-fantom.version=1.0.67
+java.runtime.version=1.8
+fantom.version=1.0.74
 fantom.downloadUrl=http://example.com/fantom-custom.zip
 fantom.buildTarget=compile
+
 ```
 
 Note that (due to bash script restrictions) you **must** have a trailing new line `\n` character on the last line of `heroku.props`.
@@ -350,7 +351,7 @@ Note that this buildpack also creates a file called `system.properties` that is 
 
 ### Fantom Version
 
-By default this buildpack installs *Fantom 1.0.70*, should you wish to install a different version then edit `heroku.props`:
+By default this buildpack installs *Fantom 1.0.74*, should you wish to install a different version then edit `heroku.props`:
 
 ```
 fantom.version=1.0.68
@@ -358,17 +359,12 @@ fantom.version=1.0.68
 
 At the time of writing the following Fantom versions are supported:
 
-* 1.0.70
-* 1.0.69
-* 1.0.68
-* 1.0.67
-* 1.0.66
-* 1.0.65
+* 1.0.65 through to 1.0.74
 
 You may also specify an alternative download location for Fantom:
 
 ```
-fantom.version=1.0.67
+fantom.version=1.0.68
 fantom.downloadUrl=http://example.com/fantom-custom.zip
 ```
 
@@ -401,5 +397,5 @@ Have fun!
 [procfile]: https://devcenter.heroku.com/articles/procfile
 [afBedSheet]: http://eggbox.fantomfactory.org/pods/afBedSheet
 [afIoc]: http://eggbox.fantomfactory.org/pods/afIoc
-[fantom-factory-articles]: http://www.fantomfactory.org/tags/heroku
+[fantom-factory-articles]: http://www.alienfactory.co.uk/tags/heroku
 [eggbox-repo]: http://eggbox.fantomfactory.org/
